@@ -1,113 +1,60 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>老馬</title>
+    <title>Web.Java 简介</title>
+
     <meta name="description" content="段子手，代码狗">
     <meta name="keywords" content="代码,大数据,算法,MySQL,PHP,Python,PHP,Nginx"/>
     <meta name="author" content="老馬"/>
     <link rel="stylesheet" href="/status/main.css">
-    <script src="/status/min.js"></script>
+    <link rel="stylesheet" href="/status/markdown.css">
 </head>
 <body>
 <header>
-
     <a id="go-back-home" href="#">
+
         <h1>Web.Java 简介</h1>
+
     </a>
-
 </header>
-<div class="content">
-    <article class="markdown-body entry-content" itemprop="mainContentOfPage">
-        <h2><a id="user-content-轻量级无依赖" class="anchor" href="#轻量级无依赖" aria-hidden="true"><span
-                class="octicon octicon-link"></span></a>轻量级，无依赖</h2>
+<div class="content markdown-body">
 
-        <p>Web.Java没有任何依赖，只要安装JDK7及以上版本就可以独立运行。不需要安装其他任何的东西。
-            当然，如果你要使用数据库需要需要相应的JDBC。如果你想，你可以使用任何你想使用的扩展。</p>
+    <h1 id="web-java-">Web.Java 简介</h1>
+    <p>=========</p>
+    <h2 id="-">轻量级，无依赖</h2>
+    <p>Web.Java没有任何依赖，只要安装JDK7及以上版本就可以独立运行。不需要安装其他任何的东西。
+    当然，如果你要使用数据库需要需要相应的JDBC。如果你想，你可以使用任何你想使用的扩展。</p>
+    <h2 id="-">非阻塞，高性能</h2>
+    <p>Web.Java是一个高性能，轻量级的非阻塞式服务器，而且速度相当快。<br>为了能更好的提高性能，Web.Java把HTTP服务区分应用和文件服务两种。</p>
+    <ul>
+    <li>Web.Java 整体采用Reactor模式用来接收或响应HTTP请求（原理同Nginx）。</li>
+    <li>应用服务采用了Reactor来响应请求。</li>
+    <li>文件服务采用了Proactor模式，并搭配304状态使用，能极大的提高静态文件的相应速度，且不影响整体。</li>
+    </ul>
+    <h2 id="-">模板引擎</h2>
+    <ul>
+    <li>简单的标签：只需要记住{{}}标签用于输出变量，{%%}标签用于if,for 等操作。</li>
+    <li>可以继承的模版：页面的布局，HTML文件的复用等问题，通过模版继承机制可以得到解决。用{%extends xx%}关键字实现继承。  </li>
+    <li>高性能：Web.Java会自动把Html文件，编译成Java文件。应用到生产环境的时候，速度等同于Java的硬输出。且在DEBUG模式下，会动态的加载模板文件，而不需要重启进程。</li>
+    </ul>
+    <h2 id="-url">灵活漂亮的URL</h2>
+    <p>随便打开几个J2EE的网站，我就不想吐槽那个URL了。Web.Java使用正则表达式来配置URL，这样做可以提供足够强大和灵活的URL模式。比如像用“/Article/23”想获取文章的ID可以这样来配置URL  </p>
+    <pre class="editor-colors lang-text"><div class="line"><span class="text plain"><span class="meta paragraph text"><span>HttpServer.setPATH(&quot;/Article/(\\d+)&quot;,new&nbsp;ArticleHandler());&nbsp;&nbsp;</span></span></span></div><div class="line"><span class="text plain"><span>&nbsp;</span></span></div><div class="line"><span class="text plain"><span class="meta paragraph text"><span>//ArticleHandler.java文件&nbsp;get方法</span></span></span></div><div class="line"><span class="text plain"><span class="meta paragraph text"><span>public&nbsp;void&nbsp;get(String&nbsp;id){&nbsp;&nbsp;</span></span></span></div><div class="line"><span class="text plain"><span>&nbsp;&nbsp;</span><span class="meta paragraph text"><span>//获取ID进行其他操作</span></span></span></div><div class="line"><span class="text plain"><span class="meta paragraph text"><span>&nbsp;&nbsp;……&nbsp;&nbsp;</span></span></span></div><div class="line"><span class="text plain"><span class="meta paragraph text"><span>}</span></span></span></div></pre><p>这样在ArticleHandler中对应的get或者post方法中就会获取相应的参数。当然，你可以任意的使用正则表达式来配置你的URL  </p>
+    <h2 id="-">简单易用的数据库操作</h2>
+    <pre class="editor-colors lang-text"><div class="line"><span class="text plain"><span class="meta paragraph text"><span>Options.DBURL&nbsp;=&nbsp;&quot;jdbc:mysql://localhost:3306/test&quot;;</span></span></span></div><div class="line"><span class="text plain"><span class="meta paragraph text"><span>Options.DBDriver&nbsp;=&nbsp;&quot;com.mysql.jdbc.Driver&quot;;</span></span></span></div><div class="line"><span class="text plain"><span class="meta paragraph text"><span>Options.DBUser&nbsp;=&nbsp;&quot;root&quot;;</span></span></span></div><div class="line"><span class="text plain"><span class="meta paragraph text"><span>Options.DBPassword&nbsp;=&nbsp;&quot;123456&quot;;</span></span></span></div></pre><p>配置好数据库信息后，可以直接在Handler中使用DB中的静态方法进行操作。<br>具体的操作在DB中有说明。当然如果你想，可以使用任何你想用的ORM。当然，希望你能直接使用SQL，不想解释为什么。</p>
+    <h2 id="hello-world-">Hello World!</h2>
+    <p>看名字就知道了。让我们开始使用Web.Java吧！<br>把源码包放到你的项目目录下面。
+    然后在main方法中加入</p>
+    <pre class="editor-colors lang-text"><div class="line"><span class="text plain"><span class="meta paragraph text"><span>HttpServer.setPATH(&quot;/&quot;,&nbsp;new&nbsp;IndexHandler());</span></span></span></div><div class="line"><span class="text plain"><span class="meta paragraph text"><span>System.out.println(&quot;Listen&nbsp;8080&quot;);</span></span></span></div><div class="line"><span class="text plain"><span class="meta paragraph text"><span>HttpServer.init(8080);</span></span></span></div></pre><p>IndexHandler.java</p>
+    <pre class="editor-colors lang-text"><div class="line"><span class="text plain"><span class="meta paragraph text"><span>public&nbsp;void&nbsp;get()&nbsp;{</span></span></span></div><div class="line"><span class="text plain"><span>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="meta paragraph text"><span>this.writer(&quot;Hello&nbsp;World!&quot;);</span></span></span></div><div class="line"><span class="text plain"><span class="meta paragraph text"><span>}</span></span></span></div></pre><p>现在Run it 浏览器打开就会看到你Writer的内容了。  </p>
 
-        <h2><a id="user-content-非阻塞高性能" class="anchor" href="#非阻塞高性能" aria-hidden="true"><span
-                class="octicon octicon-link"></span></a>非阻塞，高性能</h2>
-
-        <p>Web.Java是一个高性能，轻量级的非阻塞式服务器，而且速度相当快。<br>
-            为了能更好的提高性能，Web.Java把HTTP服务区分应用和文件服务两种。</p>
-
-        <ul>
-            <li>Web.Java 整体采用Reactor模式用来接收或响应HTTP请求（原理同Nginx）。</li>
-            <li>应用服务采用了Reactor来响应请求。</li>
-            <li>文件服务采用了Proactor模式，并搭配304状态使用，能极大的提高静态文件的相应速度，且不影响整体。</li>
-        </ul>
-
-        <h2><a id="user-content-模板引擎" class="anchor" href="#模板引擎" aria-hidden="true"><span
-                class="octicon octicon-link"></span></a>模板引擎</h2>
-
-        <ul>
-            <li>简单的标签：只需要记住{{}}标签用于输出变量，{%%}标签用于if,for 等操作。</li>
-            <li>可以继承的模版：页面的布局，HTML文件的复用等问题，通过模版继承机制可以得到解决。用{%extends xx%}关键字实现继承。<br></li>
-            <li>高性能：Web.Java会自动把Html文件，编译成Java文件。应用到生产环境的时候，速度等同于Java的硬输出。且在DEBUG模式下，会动态的加载模板文件，而不需要重启进程。</li>
-        </ul>
-
-        <h2><a id="user-content-灵活漂亮的url" class="anchor" href="#灵活漂亮的url" aria-hidden="true"><span
-                class="octicon octicon-link"></span></a>灵活漂亮的URL</h2>
-
-        <p>
-            随便打开几个J2EE的网站，我就不想吐槽那个URL了。Web.Java使用正则表达式来配置URL，这样做可以提供足够强大和灵活的URL模式。比如像用“/Article/23”想获取文章的ID可以这样来配置URL </p>
-
-<pre><code>HttpServer.setPATH("/Article/(\\d+)",new ArticleHandler());
-
-    //ArticleHandler.java文件 get方法
-    public void get(String id){
-    //获取ID进行其他操作
-    ……
-    }
-</code></pre>
-
-        <p>这样在ArticleHandler中对应的get或者post方法中就会获取相应的参数。当然，你可以任意的使用正则表达式来配置你的URL </p>
-
-        <h2><a id="user-content-简单易用的数据库操作" class="anchor" href="#简单易用的数据库操作" aria-hidden="true"><span
-                class="octicon octicon-link"></span></a>简单易用的数据库操作</h2>
-
-<pre><code>Options.DBURL = "jdbc:mysql://localhost:3306/test";
-    Options.DBDriver = "com.mysql.jdbc.Driver";
-    Options.DBUser = "root";
-    Options.DBPassword = "123456";
-</code></pre>
-
-        <p>配置好数据库信息后，可以直接在Handler中使用DB中的静态方法进行操作。<br>
-            具体的操作在DB中有说明。当然如果你想，可以使用任何你想用的ORM。当然，希望你能直接使用SQL，不想解释为什么。</p>
-
-        <h2><a id="user-content-hello-world" class="anchor" href="#hello-world" aria-hidden="true"><span
-                class="octicon octicon-link"></span></a>Hello World!</h2>
-
-        <p>看名字就知道了。让我们开始使用Web.Java吧！<br>
-            把源码包放到你的项目目录下面。
-            然后在main方法中加入</p>
-
-<pre>
-    <code>
-        HttpServer.setPATH("/", new IndexHandler());
-        System.out.println("Listen 8080");
-        HttpServer.init(8080);
-    </code>
-</pre>
-        <p>IndexHandler.java</p>
-
-<pre>
-    <code>
-        public void get() {
-        this.writer("Hello World!");
-        }
-    </code>
-</pre>
-
-        <p>现在Run it 浏览器打开就会看到你Writer的内容了。 </p>
-    </article>
 </div>
 <footer>
-    <a href="http://laoma.im/" target="_blank" class="muted">关于老馬</a>
+    <a href="/about.html" target="_blank" class="muted">关于老馬</a>
 </footer>
-
+<script src="/status/min.js"></script>
 </body>
