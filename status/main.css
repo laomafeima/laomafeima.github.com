@@ -118,7 +118,7 @@ footer a:hover {
 
 #back-top{
     position: fixed;
-    right: 40px;
+    right: 10px;
     bottom: 0;
     font-size: 4em;
     color: #333;
@@ -126,11 +126,10 @@ footer a:hover {
 #back-top:hover{
     color: #269;
 }
-
 @media (max-width: 480px){
     body .content ul.posts .datetime {
         float: none;
-        display: block;
+        display: none;
         width: auto;
         text-align: left;
     }

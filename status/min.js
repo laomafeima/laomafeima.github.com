@@ -6,7 +6,7 @@ function totop()
     }
     else
     {
-        document.body.scrollTop -= 20;
+        document.body.scrollTop -= 15;
     }
 }
 
@@ -18,7 +18,7 @@ function back_top()
 
 document.onscroll = function()
 {
-    if(document.body.scrollTop > 100)
+    if(document.body.scrollTop > 400)
     {
         var aEle = document.getElementById("back-top");
         if(!aEle)

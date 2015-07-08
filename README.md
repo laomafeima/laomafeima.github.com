@@ -1,2 +1,2 @@
-# laomafeima.github.com
-I`m Mark
+# laoma.im
+这是我的个人博客。
