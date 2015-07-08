@@ -6,8 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>MySQL PHP Python laoma.im 老馬</title>
-    <meta name="description" content="MySQL PHP Python laoma.im 老馬">
+    <title>Web.Java 简介</title>
+    <meta name="description" content="段子手，代码狗">
     <meta name="keywords" content="代码,大数据,算法,MySQL,PHP,Python,PHP,Nginx"/>
     <meta name="author" content="老馬"/>
     <link rel="stylesheet" href="/monthly/css/typo.css">
@@ -67,12 +67,12 @@
             list-style: none;
         }
 
-        .typo h3 {
+        .content h3 {
             font-size: 1.6em;
 
         }
 
-        .typo h1, .typo h2, .typo h3, .typo h4, .typo h5, .typo h6 {
+        .content h1, .content h2, .content h3, .content h4, .content h5, .content h6 {
             margin-bottom: 0.4em;
             line-height: 1.5;
         }
@@ -89,17 +89,17 @@
             text-align: right;
         }
 
-        .typo a {
+        .content a {
             border-bottom: 1px solid #1abc9c;
         }
 
-        .typo a:hover {
+        .content a:hover {
+
             border-bottom-color: #555;
             color: #555;
             text-decoration: none;
             background: repeat-x left bottom;
         }
-
 
         .muted {
             color: #8f8f8f;
@@ -121,6 +121,7 @@
             padding: 30px 0 30px;
             text-align: center;
         }
+
         footer a:hover {
             color: #1abc9c;
         }
@@ -135,8 +136,7 @@
     </a>
 
 </header>
-
-<div id="readme" class="content typo">
+<div class="content">
     <article class="markdown-body entry-content" itemprop="mainContentOfPage">
         <h2><a id="user-content-轻量级无依赖" class="anchor" href="#轻量级无依赖" aria-hidden="true"><span
                 class="octicon octicon-link"></span></a>轻量级，无依赖</h2>
@@ -203,18 +203,18 @@
 
 <pre>
     <code>
-    HttpServer.setPATH("/", new IndexHandler());
-    System.out.println("Listen 8080");
-    HttpServer.init(8080);
+        HttpServer.setPATH("/", new IndexHandler());
+        System.out.println("Listen 8080");
+        HttpServer.init(8080);
     </code>
 </pre>
-<p>IndexHandler.java</p>
+        <p>IndexHandler.java</p>
 
 <pre>
     <code>
-    public void get() {
+        public void get() {
         this.writer("Hello World!");
-    }
+        }
     </code>
 </pre>
 
