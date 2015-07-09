@@ -136,6 +136,12 @@ footer a:hover {
 #back-top:hover{
     color: #269;
 }
+
+.markdown-body h1 {
+    text-align: center;
+    padding-top: 1em;
+}
+
 @media (max-width: 480px){
     body .content ul.posts .datetime {
         float: none;
