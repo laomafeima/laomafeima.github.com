@@ -15,13 +15,11 @@
 </head>
 <body>
 <header>
-    <a id="go-back-home" href="#">
-
-        <h1>Web.Java 简介</h1>
-
-    </a>
 </header>
 <div class="content markdown-body">
+
+    <h1 id="web-java-">Web.Java 简介</h1>
+    <p>=========</p>
     <h2 id="-">轻量级，无依赖</h2>
     <p>Web.Java没有任何依赖，只要安装JDK7及以上版本就可以独立运行。不需要安装其他任何的东西。
     当然，如果你要使用数据库需要需要相应的JDBC。如果你想，你可以使用任何你想使用的扩展。</p>
@@ -40,7 +38,7 @@
     </ul>
     <h2 id="-url">灵活漂亮的URL</h2>
     <p>随便打开几个J2EE的网站，我就不想吐槽那个URL了。Web.Java使用正则表达式来配置URL，这样做可以提供足够强大和灵活的URL模式。比如像用“/Article/23”想获取文章的ID可以这样来配置URL  </p>
-    <pre class="editor-colors lang-text"><div class="line"><span class="text plain"><span class="meta paragraph text"><span>HttpServer.setPATH(&quot;/Article/(\\d+)&quot;,new&nbsp;ArticleHandler());&nbsp;&nbsp;</span></span></span></div><div class="line"><span class="text plain"><span>&nbsp;</span></span></div><div class="line"><span class="text plain"><span class="meta paragraph text"><span>//ArticleHandler.java文件&nbsp;get方法</span></span></span></div><div class="line"><span class="text plain"><span class="meta paragraph text"><span>public&nbsp;void&nbsp;get(String&nbsp;id){&nbsp;&nbsp;</span></span></span></div><div class="line"><span class="text plain"><span>&nbsp;&nbsp;</span><span class="meta paragraph text"><span>//获取ID进行其他操作</span></span></span></div><div class="line"><span class="text plain"><span class="meta paragraph text"><span>&nbsp;&nbsp;……&nbsp;&nbsp;</span></span></span></div><div class="line"><span class="text plain"><span class="meta paragraph text"><span>}</span></span></span></div></pre><p>这样在ArticleHandler中对应的get或者post方法中就会获取相应的参数。当然，你可以任意的使用正则表达式来配置你的URL  </p>
+    <pre class="editor-colors lang-text"><div class="line"><span class="text plain"><span class="meta paragraph text"><span>HttpServer.setPATH(&quot;/Article/(\\d+)&quot;,new&nbsp;ArticleHandler());&nbsp;&nbsp;</span></span></span></div><div class="line"><span class="text plain"><span>&nbsp;</span></span></div><div class="line"><span class="text plain"><span class="meta paragraph text"><span>//ArticleHandler.java文件&nbsp;get方法&nbsp;</span></span></span></div><div class="line"><span class="text plain"><span class="meta paragraph text"><span>public&nbsp;void&nbsp;get(String&nbsp;id){&nbsp;&nbsp;</span></span></span></div><div class="line"><span class="text plain"><span>&nbsp;&nbsp;</span><span class="meta paragraph text"><span>//获取ID进行其他操作</span></span></span></div><div class="line"><span class="text plain"><span class="meta paragraph text"><span>&nbsp;&nbsp;……&nbsp;&nbsp;</span></span></span></div><div class="line"><span class="text plain"><span class="meta paragraph text"><span>}</span></span></span></div></pre><p>这样在ArticleHandler中对应的get或者post方法中就会获取相应的参数。当然，你可以任意的使用正则表达式来配置你的URL  </p>
     <h2 id="-">简单易用的数据库操作</h2>
     <pre class="editor-colors lang-text"><div class="line"><span class="text plain"><span class="meta paragraph text"><span>Options.DBURL&nbsp;=&nbsp;&quot;jdbc:mysql://localhost:3306/test&quot;;</span></span></span></div><div class="line"><span class="text plain"><span class="meta paragraph text"><span>Options.DBDriver&nbsp;=&nbsp;&quot;com.mysql.jdbc.Driver&quot;;</span></span></span></div><div class="line"><span class="text plain"><span class="meta paragraph text"><span>Options.DBUser&nbsp;=&nbsp;&quot;root&quot;;</span></span></span></div><div class="line"><span class="text plain"><span class="meta paragraph text"><span>Options.DBPassword&nbsp;=&nbsp;&quot;123456&quot;;</span></span></span></div></pre><p>配置好数据库信息后，可以直接在Handler中使用DB中的静态方法进行操作。<br>具体的操作在DB中有说明。当然如果你想，可以使用任何你想用的ORM。当然，希望你能直接使用SQL，不想解释为什么。</p>
     <h2 id="hello-world-">Hello World!</h2>
@@ -51,7 +49,7 @@
 
 </div>
 <footer>
-    <a href="/about.html" target="_blank" class="muted">关于老馬</a>
+    <a href="/about.html" target="_blank" class="muted">关于我</a>
 </footer>
 <script src="/status/min.js"></script>
 </body>
