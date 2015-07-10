@@ -38,7 +38,7 @@ header a:hover {
     position: relative;
     width: 100%;
     max-width: 1000px;
-    margin: auto;
+    margin: 60px auto auto;
 }
 
 ul.posts, ul.posts li {
