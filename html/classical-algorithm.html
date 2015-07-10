@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>经典算法详解及实现</title>
+
+    <meta name="description" content="经典算法详解及实现">
+    <meta name="keywords" content="经典,算法,详解,实现"/>
+    <meta name="author" content="老馬"/>
+    <link rel="icon" type="image/png" href="/status/favicon.png">
+    <link rel="stylesheet" href="/status/main.css">
+    <link rel="stylesheet" href="/status/markdown.css">
+</head>
+<body>
+<header>
+</header>
+<div class="content markdown-body">
+
+    <h1 id="-">经典算法详解及实现</h1>
+    <p>这里记录和实现一些经典算法。<br>并有 C，PHP 示例代码<br><em>持续更新中……</em></p>
+    <h3 id="-">二分法查找算法</h3>
+    <p>此算法适合数据量很大的场景使用。采用二分法查找时，数据需是是有序的。
+    算法说明：</p>
+    <blockquote>
+    <p>假设数据是按升序排序的数组 array，查找值 x ，确定数组长度 l ，首先对比 array 中间 array[(l/2)] 与 x 的值。<br>若两值相等，查找成功。<br>若 x 小于 array[(l/2)]，则在数组 array 的前半段二分法查找，否则在数列的后半段中二分法查找，直到找到为止。</p>
+    </blockquote>
+    <pre class="editor-colors lang-text"><div class="line"><span class="text plain"><span class="meta paragraph text"><span>function&nbsp;binarySearch($array,&nbsp;$x)</span></span></span></div><div class="line"><span class="text plain"><span class="meta paragraph text"><span>{</span></span></span></div><div class="line"><span class="text plain"><span>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="meta paragraph text"><span>$start&nbsp;=&nbsp;0;</span></span></span></div><div class="line"><span class="text plain"><span class="meta paragraph text"><span>&nbsp;&nbsp;&nbsp;&nbsp;$end&nbsp;=&nbsp;count($array)&nbsp;-&nbsp;1;</span></span></span></div><div class="line"><span class="text plain"><span>&nbsp;</span></span></div><div class="line"><span class="text plain"><span>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="meta paragraph text"><span>while($start&nbsp;&lt;=&nbsp;$end)</span></span></span></div><div class="line"><span class="text plain"><span class="meta paragraph text"><span>&nbsp;&nbsp;&nbsp;&nbsp;{</span></span></span></div><div class="line"><span class="text plain"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="meta paragraph text"><span>$index&nbsp;=&nbsp;intval(($start&nbsp;+&nbsp;$end)&nbsp;/&nbsp;2);</span></span></span></div><div class="line"><span class="text plain"><span class="meta paragraph text"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if($x&nbsp;&lt;&nbsp;$array[$index])</span></span></span></div><div class="line"><span class="text plain"><span class="meta paragraph text"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{</span></span></span></div><div class="line"><span class="text plain"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="meta paragraph text"><span>$end&nbsp;=&nbsp;$index&nbsp;-&nbsp;1;</span></span></span></div><div class="line"><span class="text plain"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="meta paragraph text"><span>}</span></span></span></div><div class="line"><span class="text plain"><span class="meta paragraph text"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;elseif($x&nbsp;&gt;&nbsp;$array[$index])</span></span></span></div><div class="line"><span class="text plain"><span class="meta paragraph text"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{</span></span></span></div><div class="line"><span class="text plain"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="meta paragraph text"><span>$start&nbsp;=&nbsp;$index&nbsp;+&nbsp;1;</span></span></span></div><div class="line"><span class="text plain"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="meta paragraph text"><span>}</span></span></span></div><div class="line"><span class="text plain"><span class="meta paragraph text"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else</span></span></span></div><div class="line"><span class="text plain"><span class="meta paragraph text"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{</span></span></span></div><div class="line"><span class="text plain"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="meta paragraph text"><span>return&nbsp;$index;</span></span></span></div><div class="line"><span class="text plain"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="meta paragraph text"><span>}</span></span></span></div><div class="line"><span class="text plain"><span>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="meta paragraph text"><span>}</span></span></span></div><div class="line"><span class="text plain"><span class="meta paragraph text"><span>&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;-1;</span></span></span></div><div class="line"><span class="text plain"><span class="meta paragraph text"><span>}</span></span></span></div></pre>
+
+</div>
+<footer>
+    <a href="/about.html" target="_blank" class="muted">关于我</a>
+</footer>
+<script src="/status/min.js"></script>
+</body>
