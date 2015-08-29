@@ -30,7 +30,7 @@
     <h4 id="-">密钥登录</h4>
     <pre class="editor-colors lang-text"><div class="line"><span class="text plain"><span class="meta paragraph text"><span>ssh-keygen&nbsp;-t&nbsp;dsa&nbsp;-P&nbsp;&#39;&#39;&nbsp;-f&nbsp;~/.ssh/id_dsa</span></span></span></div></pre><p>生成密钥，按照提示输入即可生成。</p>
     <pre class="editor-colors lang-text"><div class="line"><span class="text plain"><span class="meta paragraph text"><span>cat&nbsp;~/.ssh/id_dsa.pub&nbsp;&gt;&gt;&nbsp;~/.ssh/authorized_keys</span></span></span></div></pre><p>执行以上命令添加公钥，如果使用自己已经有的密钥，直接添加进 authorized_keys 即可。如果文件或者目录不存在创建即可。</p>
-    <pre class="editor-colors lang-text"><div class="line"><span class="text plain"><span class="meta paragraph text"><span>ssh&nbsp;localhot</span></span></span></div></pre><p>如果能登录即配置成功<br>如果还是无法登录，注意修改文件目录和文件权限。</p>
+    <pre class="editor-colors lang-text"><div class="line"><span class="text plain"><span class="meta paragraph text"><span>ssh&nbsp;localhost</span></span></span></div></pre><p>如果能登录即配置成功<br>如果还是无法登录，注意修改文件目录和文件权限。</p>
     <h4 id="ssh-">SSH 配置</h4>
     <p>SSH 配置在 /etc/ssh/sshd_config  </p>
     <pre class="editor-colors lang-text"><div class="line"><span class="text plain"><span class="meta paragraph text"><span>sudo&nbsp;vim&nbsp;/etc/ssh/sshd_config</span></span></span></div></pre><p>进入配置文件，开始修改  </p>
