@@ -136,13 +136,14 @@ footer a:hover {
 #back-top:hover{
     color: #269;
 }
-
+.markdown-body{
+  position: relative;
+  width: 100%;
+  max-width: 1000px;
+  margin: 60px auto auto;
+}
 .markdown-body h1 {
     text-align: center;
-}
-.markdown-body a:hover {
-  text-decoration: none;
-  border-bottom: 1px solid #555;
 }
 
 @media (max-width: 480px){
