@@ -140,6 +140,9 @@ footer a:hover {
 .markdown-body h1 {
     text-align: center;
 }
+.markdown-body a:hover {
+  border-bottom: 1px solid #555;
+}
 
 @media (max-width: 480px){
     body .content ul.posts .datetime {
