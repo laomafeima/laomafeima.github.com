@@ -279,6 +279,7 @@ class TestParamHandler
 ##MVC 实现
 ##Cookie 操作
 ##事件广播机制
+##错误与异常处理
 ##日志
 ##多语言
 ##类反射
