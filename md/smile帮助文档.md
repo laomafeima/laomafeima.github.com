@@ -271,14 +271,109 @@ class TestParamHandler
 }
 ```
 
+##响应请求
 ##参数获取
-###GET 参数获取
-###POST 参数获取
+
+Request 类封装了获取外部数据的一些操作，比如 `Request::get()`可以获取 GET 参数，是`?`之后的参数，即 URL 里面的 Query 字段参数如 URL `http://test.com/read?id=3`  可以通过`\Requst::get()` 获取参数
+Smile 封装了`Request::get()`,`Request::post()`，分别用以获取get，post参数。
+另外还有一个`Request::param()`方法，会自动根据参数名字检查是get或是post参数，并返回。如果get和post 都有这个参数，那么有限返回 post 参数。
+`Request::get()`,`Request::post()`,`Request::param()`三个方法用法一样，分别有三个参数，第一个参数是要获取的参数名字。第二个参数是默认值，如果这个变量不存在就返货默认值，默认值为`null`，第三个参数为过滤规则，可以根据自己的需要传入参数。规则与`filter_input`一致。参见[php.net](http://php.net/manual/zh/filter.constants.php)
+如果要获取的参数是个数组，不用担心，框架会根据参数类型自动转换的，如果是个数组，那么这三个方法也会返回一个数组的。
+
+```
+<?php
+
+.......
+$data = \Request::get('foo');
+var_dump($data);
+$data = \Request::post('foo');
+var_dump($data);
+$data = \Request::param('foo');
+var_dump($data);
+$test = \Request::get('test', 100);
+var_dump($test);
+$email = \Request::get('email', false, FILTER_VALIDATE_EMAIL);
+var_dump($email);
+```
+
+除此之外。Request 类海封装了。`isAjax`,`getClientIP`等方法，方便开发。
+
+|方法名字|函数作用|其他|
+|--------|--------|----|
+|isAjax|是否是Ajax请求|如果传入一个参数名字，只要这个请求中参数存在且值为 true 也会通过这个判断|
+|getClientIP|返回用户IP||
+|getAcceptLang|返回用户可以接受的语言|多语言情况下根据用户返回不同语言|
+|getAccept|返回用户接受的文档类型|在restful风格下，可以判断需要返回的文件类型|
+
 ##模版
+Smile 没有去实现一套模版语言，直接在模版文件中使用 php 代码。这样使用起来既灵活又方便，不需要增加额外的学习负担。
+项目中模版文件存在 `TPL_PATH` 中，默认在 `APP_PATH . '/TPL'` 目录中。可以通过定义常量`TPL_PATH` 改变目录位置。
+使用时，可以使用`TPL::assgin()`方法给模版复制，因为处于变量安全的考虑，模版中只剋使用允许使用的变量。
+然后可以调用`TPL::render()`方法来渲染模版。需要在参数中指定模版文件的名字。这个模版文件位于常量 `TPL_PATH` 定义的目录下。也可以指定使用其子目录的模版文件。只需要在参数中指明即可，如`TPL::render('User/login.html')`，那么就会去使用`{TPL_PATH}/User/login.html`的模版文件。
+
+```
+<?php
+
+......
+\TPL::assign('data', $data); // 给模版文件复制一个变量
+\TPL::render('index.html'); // 指定渲染一个模版文件
+//这个模版文件路径就是 {TPL_PATH}/index.html
+
+\TPL::render('User/login.html') //模版文件支持多目录。
+//这个模版文件路径是 {TPL_PATH}/User/login.html 
+......
+
+```
+
+此外render方法还有第二个参数，这个参数必须是个数组，是模版文件可以使用的变量。这个数组索引为何变量名字，值是变量，相当与`assign`方法。
+
+```
+\TPL::assign('data', $data); // 给模版文件复制一个变量
+\TPL::render('index.html'); // 指定渲染一个模版文件
+```
+
+相当与
+
+```
+\TPL::render('index.html', array('data', $data)); // 指定渲染一个模版文件
+```
+
+以上这两种用法作用是一样的。都可以在模版中使用变量`$data`了
+
+```
+<html>
+	<header>
+	......
+	</header>
+	<body>
+	......
+	<?php echo $data;?>
+	......
+	</body>
+</html>
+```
 ##数据库操作
 ##MVC 实现
 ##Cookie 操作
+Smile 封装对 Cookie 的操作。开发过程中可以方便的对 Cookie 进行操作。
+`Cookie::set()` 方法可以设置一个 cookie 值。第一个参数为cookie 名字，第二个参数为cookie的值，这两个是必须参数。
+第三个参数是 cookie 有效时间事件，单位是秒，只需要传来一个数字即可，默认为0
+第四个参数为cookie的路径，第五个参数为 Cookie 允许使用的域名。  
+
+`Cookie::get()`可以获取一个cookie 值，只需要参数里传递cookie的名字即可
+`Cookie::delete()` 删除一个cookie ，参数里指定 cookie 名字即可删除cookie
+`Cookie::clear()` 调用此方法可以删除所有的cookie
+
 ##事件广播机制
+在一个项目里，一个特定的操作，会经常触发要一些列的操作。比如，当用户登录的时候，
+1.会去检查用户有没有未读的消息。
+2.检查是不是有未完成订单，提醒支付。
+3.检查IP是不是常用IP。
+4.添加登录日志。
+等等操作。
+如果未来用户登录的时候要添加其他功能。那就只有去修改原来的逻辑代码。
+如果我们在用户登录的时候触发一个名字叫`UserLogin`的事件。在用户登录的时候需要处理的操作都去关注这个事件。当这个事件发生的时候，会触发所有的操作。当添加或者删除功能的时候，只需要添加或移除处理代码即可。当然事件广播机制还有更多的用处。
+
 ##错误与异常处理
 ##日志
 ##多语言
