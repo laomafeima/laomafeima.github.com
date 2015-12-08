@@ -274,11 +274,11 @@ class TestParamHandler
 ##响应请求
 ##参数获取
 
-Request 类封装了获取外部数据的一些操作，比如 `Request::get()`可以获取 GET 参数，是`?`之后的参数，即 URL 里面的 Query 字段参数如 URL `http://test.com/read?id=3`  可以通过`\Requst::get()` 获取参数
-Smile 封装了`Request::get()`,`Request::post()`，分别用以获取get，post参数。
-另外还有一个`Request::param()`方法，会自动根据参数名字检查是get或是post参数，并返回。如果get和post 都有这个参数，那么有限返回 post 参数。
-`Request::get()`,`Request::post()`,`Request::param()`三个方法用法一样，分别有三个参数，第一个参数是要获取的参数名字。第二个参数是默认值，如果这个变量不存在就返货默认值，默认值为`null`，第三个参数为过滤规则，可以根据自己的需要传入参数。规则与`filter_input`一致。参见[php.net](http://php.net/manual/zh/filter.constants.php)
-如果要获取的参数是个数组，不用担心，框架会根据参数类型自动转换的，如果是个数组，那么这三个方法也会返回一个数组的。
+Request 类封装了获取外部数据的一些操作，比如 `Request::get()`可以获取 GET 参数，是`?`之后的参数，即 URL 里面的 Query 字段参数如 URL `http://test.com/read?id=3`  可以通过`\Requst::get()` 获取参数  
+Smile 封装了`Request::get()`,`Request::post()`，分别用以获取get，post参数。  
+另外还有一个`Request::param()`方法，会自动根据参数名字检查是get或是post参数，并返回。如果get和post 都有这个参数，那么有限返回 post 参数。  
+`Request::get()`,`Request::post()`,`Request::param()`三个方法用法一样，分别有三个参数，第一个参数是要获取的参数名字。第二个参数是默认值，如果这个变量不存在就返货默认值，默认值为`null`，第三个参数为过滤规则，可以根据自己的需要传入参数。规则与`filter_input`一致。参见[php.net](http://php.net/manual/zh/filter.constants.php)  
+如果要获取的参数是个数组，不用担心，框架会根据参数类型自动转换的，如果是个数组，那么这三个方法也会返回一个数组的。  
 
 ```
 <?php
@@ -352,6 +352,9 @@ Smile 没有去实现一套模版语言，直接在模版文件中使用 php 代
 	</body>
 </html>
 ```
+
+另外 TPL 还封装了一个`write` 函数，如果传入的参数是一个字符串，会被直接输出。`\TPL::write($data)` 如果传入的是一个数组或者是对象会被转化成json字符串后在输出。  
+
 ##数据库操作
 ##MVC 实现
 ##Cookie 操作
@@ -372,9 +375,89 @@ Smile 封装对 Cookie 的操作。开发过程中可以方便的对 Cookie 进�
 4.添加登录日志。
 等等操作。
 如果未来用户登录的时候要添加其他功能。那就只有去修改原来的逻辑代码。
-如果我们在用户登录的时候触发一个名字叫`UserLogin`的事件。在用户登录的时候需要处理的操作都去关注这个事件。当这个事件发生的时候，会触发所有的操作。当添加或者删除功能的时候，只需要添加或移除处理代码即可。当然事件广播机制还有更多的用处。
+如果我们在用户登录的时候触发一个名字叫`user.login`的事件。在用户登录的时候需要处理的操作都去关注这个事件。当这个事件发生的时候，会触发所有的操作。当添加或者删除功能的时候，只需要添加或移除处理代码即可。当然事件广播机制还有更多的用处。
+###注册监听事件
+首先要在 `Application::start()` 之前调用`\Event::on()`注册要监听的事件。然后在代码里面触发这个时间即可。框架会自动调用处理方法的。
+`Event::on` 方法有三个参数，第一个是要监听的时间的名字，字符串形式，如：`user.login`。第二个参数是，负责处理事件的闭包或者对。如果是个闭包。在触发这个事件的时候会自动调用这个闭包。如果是一个对象，框架会调用对象的`answer`方法去处理这个时间。如果是个类的完整限定名。框架会去实例化这个类，并调用它的`answer`方法。  
+同一个事件，可以有多个多次被注册监听。在触发的这个时间的时候，会按照顺序逐个调用响应函数。
+第三个参数，是次数限制。比如这个响应函数只允许被调用一次，参数传`1`。那么这个事件即使触发了10次。那么这个响应函数只会被调用一次。这个限制不影响其他观察者对这个事件的监听。
+
+```
+<?php
+
+define("DEBUG", true); // 开启 debug 便于开发调试。在引入框架前定义。
+include 'smile.php'; // 引入框架。
+// 设置路由规则，并有一个匿名函数响应请求
+Application::setRoutes(array(
+	// 设定一个类的完整限定名，自动实例化这个类相应请求
+	'/\/test/' => 'App\Handler\TestHandler',
+	)
+);
+Event::on('test1', function(){echo 'Be called.';}); // 用闭包会响应这个事件
+Event::on('test1', new \App\Event\TestEvent()); // 框架会调用用对象的answer方法去响应事件
+Event::on('test1', '\App\Event\TestEvent'); // 框架会自动实例化这个类，并调用answer方法去响应事件
+Event::on('test1', '\App\Event\TestTimesEvent', 1); // 无论 test1 时间被触发了多次。这个方法只会被掉用一次。并不影响上面三个观察者的调用。仍会被多次调用。
+
+Event::trigger('test1'); 触发这个事件。这个时候框架会自动调用已经注册的观察者去处理这个事件。
+Application::start(); //运行应用
+```
+有时候观察者只允许被掉用一次。为了方便这种操作，Event 还封装了`Event::one()` 方法。这个其实相当于调用`Event::on()`,并且最后一个参数传自动设成1而已。
+
+###触发事件
+时间只有先注册，后触发时间才有作用。
+在`Event::trigger()`的时候，框架会调用所有的观察着去处理这个请求。  
+`Event::trigger()` 方法有两个参数，第一个参数是触发的事件名字比如`user.login`，那么框架就会调用左右已经注册监听`user.login`时间的函数。  
+如果在处理事件的时候需要传递参数。可以在`Event::trigger()` 方法的第二参数传递过去，如果有多个参数，可以以数组的形式传递过去，框架在调用观察者处理事件的时候，会把第二个参数传给观察者作为参数去处理。
+
+```
+<?php
+
+define("DEBUG", true); // 开启 debug 便于开发调试。在引入框架前定义。
+include 'smile.php'; // 引入框架。
+// 设置路由规则，并有一个匿名函数响应请求
+Application::setRoutes(array(
+	// 设定一个类的完整限定名，自动实例化这个类相应请求
+	'/\/test/' => 'App\Handler\TestHandler',
+	)
+);
+Event::on('test1', function($data){echo $data;}); // 用闭包会响应这个事件，并且接收参数。
+
+Event::trigger('test1', 'Test Param'); 触发这个事件。这个时候框架会自动调用已经注册的观察者去处理这个事件。并把参数传奇过去。
+Application::start(); //运行应用
+```
 
 ##错误与异常处理
+Smile 内置了错误和异常处理。如果在运行的过程中遇到了错误，框架会把错误转化成`ErrorException`错误异常并抛出。交由异常处理，做统一处理。  
+如果错误是`E_NOTICE`级别的。框架在开始调试模式的时候(即`define('DEBUG', true);`)的时候。会输出提示信息。并不会终止执行。当关闭调试模式的时候，框架并不会对这个级别的错误输出信息。
+如果在运行的过程中遇到了其他级别错误或未被捕获的异常，框架或终止终止执行。并输出信息。开启调试模式的时候，会输出友好的调试信息，便于调试。如：
+
+```
+Fatal error: Uncaught exception 'ErrorException' with message strpos() expects at least 2 parameters, 0 given
+Stack trace:
+#0 [internal function]: Application::{closure}(2, 'strpos() expect...', 'D:\\git\\code\\php...', 11, Array)
+#1 D:\git\code\php\Handler\IndexHandler.php(11): strpos()
+#2 [internal function]: App\Handler\Indexhandler->get('')
+#3 D:\git\code\php\smile.php(243): ReflectionMethod->invokeArgs(Object(App\Handler\Indexhandler), Array)
+#4 D:\git\code\php\smile.php(121): ClassAgent::getAndInvoke(Object(ReflectionClass), 'get', Array, 'any')
+#5 D:\git\code\php\smile.php(87): Application::dispatcher()
+#6 D:\git\code\php\index.php(5): Application::start()
+#7 {main}
+thrown in D:\git\code\php\Handler\IndexHandler.php on line 11
+```
+
+如果没有开启调试模式。框架会终止运行。并输出错误提示信息。`We encountered some problems, please try again later.`。即常量`DEFAULT_ERROR_MESSAGE`，如果要修改默认的提示信息。只需要自定义这个常量即可,如
+
+```
+<?php
+
+define('DEFAULT_ERROR_MESSAGE', '网站暂时遇到一些问题'); // 遇到错误时默认提示信息
+include 'smile.php'; // 引入框架。
+
+......
+
+Application::start(); //运行应用
+```
+无论是否开启调试模式，框架在遇到错误或者未捕获的异常的时候，都会写入一条错误日志。会记录当前用户IP，错误级别。以及错误堆栈信息。方便排查和处理错误或异常。
 ##日志
 ##多语言
 ##类反射
