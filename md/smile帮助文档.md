@@ -2,7 +2,9 @@ Smile 手册
 ====
 
 ##关于 Smile 框架
-smile 是一个轻量级的 PHP 框架，代码精炼只需要一个 php 文件即可运行。框架封装了开发过程中所需要基本操作，代码不超过 1000 行，去除注释后仅有 500 多行。
+Smile 是一个轻量级的 PHP 框架，代码精炼只需要一个 php 文件即可运行。框架封装了开发过程中所需要基本操作，代码不超过 1000 行，去除注释后仅有 500 多行。  
+Smile 也是一个非常自由的框架，没有强制的继承，命名等要求。可以自由的修改默认值，自由的使用命名规则。  
+也可以完全使用自己的自动加载规则，这样很多东西都可以自定。这使得 Smile 更像一个提供了封装好操作的工具包。
 
 ##获取 Smile 
 
@@ -17,13 +19,13 @@ smile 是一个轻量级的 PHP 框架，代码精炼只需要一个 php 文件�
 define("DEBUG", true); // 开启 debug 便于开发调试。在引入框架前定义。
 include 'smile.php'; // 引入框架。
 // 设置路由规则，并有一个匿名函数响应请求
-Application::setRoutes(array(
+\Application::setRoutes(array(
 			'/\//' => function()
 			{
 			echo 'Hello World.'; // 输出信息
 			}
 			));
-Application::start(); //运行应用
+\Application::start(); //运行应用
 ```
 ##环境要求
 
@@ -117,7 +119,7 @@ define('CLASS_PREFIX', 'Foo\\'); // 定义默认命名空间前缀
 include 'smile.php'; // 引入框架。
 ......
 
-Application::start(); //运行应用
+\Application::start(); //运行应用
 
 ```
 
@@ -147,7 +149,7 @@ spl_autoload_register(function($class)
 include 'smile.php'; // 引入框架。
 ......
 
-Application::start(); //运行应用
+\Application::start(); //运行应用
 
 ```
 
@@ -164,7 +166,7 @@ include 'smile.php'; // 引入框架。
 
 ......
 
-Application::start(); //运行应用
+\Application::start(); //运行应用
 
 ```
 
@@ -179,14 +181,13 @@ define('APP_PATH', '/var/site/php/'); // 定义应用目录
 define('LOG_PATH', APP_PATH . 'Log/'); // 日志生成目录
 define('LANG_PATH', APP_PATH . 'Lang/'); // 语言包目录
 define('TPL_PATH', APP_PATH . 'TPL/'); // 模版文件目录
-define('LOG_LEVEL', 4); // 默认日志记录级别
 define('DEFAULT_LANG', 'zh-CN'); // 默认使用语言
 define('DEFAULT_ERROR_MESSAGE', '网站暂时遇到一些问题'); // 遇到错误时默认提示信息
 include 'smile.php'; // 引入框架。
 
 ......
 
-Application::start(); //运行应用
+\Application::start(); //运行应用
 
 ```
 
@@ -199,13 +200,12 @@ Application::start(); //运行应用
 | LOG_PATH				|  生成日志文件目录 |  根目录（APP_PATH）下 Log 目录 |
 | LANG_PATH				|  多语言语言包所在目录 |  根目录（APP_PATH）下 Lang 目录 |
 | TPL_PATH				|  模版文件所在目录 |  根目录（APP_PATH）下 TPL 目录 |
-| LOG_LEVEL				|  日志记录级别 | Log::WARNING   |
 | DEFAULT_LANG			| 多语言默认语言  | zh-CN  |
 | DEFAULT_ERROR_MESSAGE	|  网站遇到问题时，默认给出的提示 | We encountered some problems, please try again later.|
 
 
 ## 路由
-Smile 的路由规则必须开启 pathinfo，根据正则，提供了灵活的路由规则，只要正则表达式做得到的，smile 的路由规则也能做到。
+Smile 的路由规则必须开启 pathinfo，根据正则，提供了灵活的路由规则，只要正则表达式做得到的，Smile 的路由规则也能做到。
 支持 restful 风格
 注：`?` 以后的不是pathinfo部分，不会参与正则匹配
 引入框架文件以后首先要设定路由规则，
@@ -216,7 +216,7 @@ Smile 的路由规则必须开启 pathinfo，根据正则，提供了灵活的�
 define("DEBUG", true); // 开启 debug 便于开发调试。在引入框架前定义。
 include 'smile.php'; // 引入框架。
 // 设置路由规则，并有一个匿名函数响应请求
-Application::setRoutes(array(
+\Application::setRoutes(array(
 	// 设置匿名函数响应请求
 	'/\//' => function()
 			{
@@ -230,15 +230,19 @@ Application::setRoutes(array(
 	'/\/test3/(\d*)/(.*)' => new App\Handler\TestParamHandler(),
 	)
 );
-Application::start(); //运行应用
+\Application::start(); //运行应用
 ```
 
-如果设置用匿名函数来响应请求，那么符合url规则的请求，无论是get，post请求等。都会用这个匿名函数去处理请求
+如果设置用匿名函数来响应请求，那么符合url规则的请求，无论是get，post请求等。都会用这个匿名函数去处理请求  
+
 如果设置指定一个对象去响应url符合规则的请求，框架会根据当前是get，post，delete，put等请求方式分别去调用对象的`$object->get()` 的方法。方法名全小写。  
-如果想一个方法相应所有的请求方式，只需要在类里面添加 `any` 方法，无论get还是post请求。框架都会去调用`any`方法去相应这个请求。 any 方法的优先级低于其他方法，比如，get 请求时，如果对象包含get方法，那么就会动用get方法去处理请求。而不会去掉用any方法。
-指定一个类名去相应请求的时候。框架会在每次请求到来的时候自动去实例化这个对象。然后和指定对象一样的规则去处理请求。
+
+如果想一个方法相应所有的请求方式，只需要在类里面添加 `any` 方法，无论get还是post请求。框架都会去调用`any`方法去相应这个请求。 any 方法的优先级低于其他方法，比如，get 请求时，如果对象包含get方法，那么就会动用get方法去处理请求。而不会去掉用any方法。  
+
+指定一个类名去相应请求的时候。框架会在每次请求到来的时候自动去实例化这个对象。然后和指定对象一样的规则去处理请求。  
 如果想获取URL里面的参数，可以使用正则表达式去捕获参数。框架会在调用处理函数/方法的时候自动传参。如 url `/test3/12/read`  
-根据上面设置的路由规则，可以在Handler中这样获取参数。
+
+根据上面设置的路由规则，可以在Handler中这样获取参数。  
 
 ```
 <?php
@@ -266,18 +270,63 @@ class TestParamHandler
 	{
 		var_dump($id, $param);
 		var_dump($_GET['user']);
-		var_dump(Request::get('user'));
+		var_dump(\Request::get('user'));
 	}
 }
 ```
+如果想在开始处理请求前做一些处理或者在请求结束后做一些操作。框架会在调用对象的处理方法前会调用 `before` 方法。在处理结束后会调用`finish`方法，在处理开始和结束的调用。
 
-##响应请求
+```
+<?php
+
+namespace app\Handler;
+
+class TestParamHandler
+{
+	/**
+	 * 前置操作。
+	 */	
+	public function before()
+	{
+		echo 'Before';
+	}
+	/**
+	 * 响应 get 请求
+	 */	
+	public function get($id, $param)
+	{
+		var_dump($id, $param);
+		var_dump($_GET['user']);
+		var_dump(\Request::get('user'));
+	}
+	/**
+	 * 响应 post 请求
+	 */	
+	public function post($id, $param)
+	{
+		var_dump($id, $param);
+		var_dump(\Request::post('user'));
+	}
+	/**
+	 * 收尾操作。
+	 */	
+	public function finish()
+	{
+		echo 'Finish';
+	}
+}
+```
+这里例子里面的`before`,`finish`方法，会在 get 与 post 请求到达的时候都会被调用。用法和 `post()` 方法一样，可以自由的使用，也可以获取 URL 参数。
+
 ##参数获取
 
-Request 类封装了获取外部数据的一些操作，比如 `Request::get()`可以获取 GET 参数，是`?`之后的参数，即 URL 里面的 Query 字段参数如 URL `http://test.com/read?id=3`  可以通过`\Requst::get()` 获取参数  
-Smile 封装了`Request::get()`,`Request::post()`，分别用以获取get，post参数。  
-另外还有一个`Request::param()`方法，会自动根据参数名字检查是get或是post参数，并返回。如果get和post 都有这个参数，那么有限返回 post 参数。  
-`Request::get()`,`Request::post()`,`Request::param()`三个方法用法一样，分别有三个参数，第一个参数是要获取的参数名字。第二个参数是默认值，如果这个变量不存在就返货默认值，默认值为`null`，第三个参数为过滤规则，可以根据自己的需要传入参数。规则与`filter_input`一致。参见[php.net](http://php.net/manual/zh/filter.constants.php)  
+Request 类封装了获取外部数据的一些操作，比如 `\Request::get()`可以获取 GET 参数，是`?`之后的参数，即 URL 里面的 Query 字段参数如 URL `http://test.com/read?id=3`  可以通过`\Requst::get()` 获取参数  
+
+Smile 封装了`\Request::get()`,`\Request::post()`，分别用以获取get，post参数。  
+另外还有一个`\Request::param()`方法，会自动根据参数名字检查是get或是post参数，并返回。如果get和post 都有这个参数，那么有限返回 post 参数。  
+
+`\Request::get()`,`\Request::post()`,`\Request::param()`三个方法用法一样，分别有三个参数，第一个参数是要获取的参数名字。第二个参数是默认值，如果这个变量不存在就返货默认值，默认值为`null`，第三个参数为过滤规则，可以根据自己的需要传入参数。规则与`filter_input`一致。参见[php.net](http://php.net/manual/zh/filter.constants.php)  
+
 如果要获取的参数是个数组，不用担心，框架会根据参数类型自动转换的，如果是个数组，那么这三个方法也会返回一个数组的。  
 
 ```
@@ -307,9 +356,11 @@ var_dump($email);
 
 ##模版
 Smile 没有去实现一套模版语言，直接在模版文件中使用 php 代码。这样使用起来既灵活又方便，不需要增加额外的学习负担。
+
 项目中模版文件存在 `TPL_PATH` 中，默认在 `APP_PATH . '/TPL'` 目录中。可以通过定义常量`TPL_PATH` 改变目录位置。
-使用时，可以使用`TPL::assgin()`方法给模版复制，因为处于变量安全的考虑，模版中只剋使用允许使用的变量。
-然后可以调用`TPL::render()`方法来渲染模版。需要在参数中指定模版文件的名字。这个模版文件位于常量 `TPL_PATH` 定义的目录下。也可以指定使用其子目录的模版文件。只需要在参数中指明即可，如`TPL::render('User/login.html')`，那么就会去使用`{TPL_PATH}/User/login.html`的模版文件。
+使用时，可以使用`\TPL::assgin()`方法给模版复制，因为处于变量安全的考虑，模版中只剋使用允许使用的变量。
+
+然后可以调用`\TPL::render()`方法来渲染模版。需要在参数中指定模版文件的名字。这个模版文件位于常量 `TPL_PATH` 定义的目录下。也可以指定使用其子目录的模版文件。只需要在参数中指明即可，如`\TPL::render('User/login.html')`，那么就会去使用`{TPL_PATH}/User/login.html`的模版文件。
 
 ```
 <?php
@@ -356,29 +407,35 @@ Smile 没有去实现一套模版语言，直接在模版文件中使用 php 代
 另外 TPL 还封装了一个`write` 函数，如果传入的参数是一个字符串，会被直接输出。`\TPL::write($data)` 如果传入的是一个数组或者是对象会被转化成json字符串后在输出。  
 
 ##数据库操作
-##MVC 实现
+
 ##Cookie 操作
 Smile 封装对 Cookie 的操作。开发过程中可以方便的对 Cookie 进行操作。
-`Cookie::set()` 方法可以设置一个 cookie 值。第一个参数为cookie 名字，第二个参数为cookie的值，这两个是必须参数。
+`\Cookie::set()` 方法可以设置一个 cookie 值。第一个参数为cookie 名字，第二个参数为cookie的值，这两个是必须参数。
 第三个参数是 cookie 有效时间事件，单位是秒，只需要传来一个数字即可，默认为0
 第四个参数为cookie的路径，第五个参数为 Cookie 允许使用的域名。  
 
-`Cookie::get()`可以获取一个cookie 值，只需要参数里传递cookie的名字即可
-`Cookie::delete()` 删除一个cookie ，参数里指定 cookie 名字即可删除cookie
-`Cookie::clear()` 调用此方法可以删除所有的cookie
+`\Cookie::get()`可以获取一个cookie 值，只需要参数里传递cookie的名字即可
+`\Cookie::delete()` 删除一个cookie ，参数里指定 cookie 名字即可删除cookie
+`\Cookie::clear()` 调用此方法可以删除所有的cookie
 
 ##事件广播机制
+
 在一个项目里，一个特定的操作，会经常触发要一些列的操作。比如，当用户登录的时候，
 1.会去检查用户有没有未读的消息。
 2.检查是不是有未完成订单，提醒支付。
 3.检查IP是不是常用IP。
 4.添加登录日志。
 等等操作。
+
 如果未来用户登录的时候要添加其他功能。那就只有去修改原来的逻辑代码。
 如果我们在用户登录的时候触发一个名字叫`user.login`的事件。在用户登录的时候需要处理的操作都去关注这个事件。当这个事件发生的时候，会触发所有的操作。当添加或者删除功能的时候，只需要添加或移除处理代码即可。当然事件广播机制还有更多的用处。
+
 ###注册监听事件
-首先要在 `Application::start()` 之前调用`\Event::on()`注册要监听的事件。然后在代码里面触发这个时间即可。框架会自动调用处理方法的。
-`Event::on` 方法有三个参数，第一个是要监听的时间的名字，字符串形式，如：`user.login`。第二个参数是，负责处理事件的闭包或者对。如果是个闭包。在触发这个事件的时候会自动调用这个闭包。如果是一个对象，框架会调用对象的`answer`方法去处理这个时间。如果是个类的完整限定名。框架会去实例化这个类，并调用它的`answer`方法。  
+
+首先要在 `\Application::start()` 之前调用`\Event::on()`注册要监听的事件。然后在代码里面触发这个时间即可。框架会自动调用处理方法的。
+
+`\Event::on()` 方法有三个参数，第一个是要监听的时间的名字，字符串形式，如：`user.login`。第二个参数是，负责处理事件的闭包或者对。如果是个闭包。在触发这个事件的时候会自动调用这个闭包。如果是一个对象，框架会调用对象的`answer`方法去处理这个时间。如果是个类的完整限定名。框架会去实例化这个类，并调用它的`answer`方法。  
+
 同一个事件，可以有多个多次被注册监听。在触发的这个时间的时候，会按照顺序逐个调用响应函数。
 第三个参数，是次数限制。比如这个响应函数只允许被调用一次，参数传`1`。那么这个事件即使触发了10次。那么这个响应函数只会被调用一次。这个限制不影响其他观察者对这个事件的监听。
 
@@ -388,26 +445,28 @@ Smile 封装对 Cookie 的操作。开发过程中可以方便的对 Cookie 进�
 define("DEBUG", true); // 开启 debug 便于开发调试。在引入框架前定义。
 include 'smile.php'; // 引入框架。
 // 设置路由规则，并有一个匿名函数响应请求
-Application::setRoutes(array(
+\Application::setRoutes(array(
 	// 设定一个类的完整限定名，自动实例化这个类相应请求
 	'/\/test/' => 'App\Handler\TestHandler',
 	)
 );
-Event::on('test1', function(){echo 'Be called.';}); // 用闭包会响应这个事件
-Event::on('test1', new \App\Event\TestEvent()); // 框架会调用用对象的answer方法去响应事件
-Event::on('test1', '\App\Event\TestEvent'); // 框架会自动实例化这个类，并调用answer方法去响应事件
-Event::on('test1', '\App\Event\TestTimesEvent', 1); // 无论 test1 时间被触发了多次。这个方法只会被掉用一次。并不影响上面三个观察者的调用。仍会被多次调用。
+\Event::on('test1', function(){echo 'Be called.';}); // 用闭包会响应这个事件
+\Event::on('test1', new \App\Event\TestEvent()); // 框架会调用用对象的answer方法去响应事件
+\Event::on('test1', '\App\Event\TestEvent'); // 框架会自动实例化这个类，并调用answer方法去响应事件
+\Event::on('test1', '\App\Event\TestTimesEvent', 1); // 无论 test1 时间被触发了多次。这个方法只会被掉用一次。并不影响上面三个观察者的调用。仍会被多次调用。
 
-Event::trigger('test1'); 触发这个事件。这个时候框架会自动调用已经注册的观察者去处理这个事件。
-Application::start(); //运行应用
+\Event::trigger('test1'); 触发这个事件。这个时候框架会自动调用已经注册的观察者去处理这个事件。
+\Application::start(); //运行应用
 ```
-有时候观察者只允许被掉用一次。为了方便这种操作，Event 还封装了`Event::one()` 方法。这个其实相当于调用`Event::on()`,并且最后一个参数传自动设成1而已。
+有时候观察者只允许被掉用一次。为了方便这种操作，Event 还封装了`\Event::one()` 方法。这个其实相当于调用`\Event::on()`,并且最后一个参数传自动设成1而已。
 
 ###触发事件
 时间只有先注册，后触发时间才有作用。
-在`Event::trigger()`的时候，框架会调用所有的观察着去处理这个请求。  
-`Event::trigger()` 方法有两个参数，第一个参数是触发的事件名字比如`user.login`，那么框架就会调用左右已经注册监听`user.login`时间的函数。  
-如果在处理事件的时候需要传递参数。可以在`Event::trigger()` 方法的第二参数传递过去，如果有多个参数，可以以数组的形式传递过去，框架在调用观察者处理事件的时候，会把第二个参数传给观察者作为参数去处理。
+在`\Event::trigger()`的时候，框架会调用所有的观察着去处理这个请求。  
+
+`\Event::trigger()` 方法有两个参数，第一个参数是触发的事件名字比如`user.login`，那么框架就会调用左右已经注册监听`user.login`时间的函数。  
+
+如果在处理事件的时候需要传递参数。可以在`\Event::trigger()` 方法的第二参数传递过去，如果有多个参数，可以以数组的形式传递过去，框架在调用观察者处理事件的时候，会把第二个参数传给观察者作为参数去处理。
 
 ```
 <?php
@@ -415,20 +474,22 @@ Application::start(); //运行应用
 define("DEBUG", true); // 开启 debug 便于开发调试。在引入框架前定义。
 include 'smile.php'; // 引入框架。
 // 设置路由规则，并有一个匿名函数响应请求
-Application::setRoutes(array(
+\Application::setRoutes(array(
 	// 设定一个类的完整限定名，自动实例化这个类相应请求
 	'/\/test/' => 'App\Handler\TestHandler',
 	)
 );
-Event::on('test1', function($data){echo $data;}); // 用闭包会响应这个事件，并且接收参数。
+\Event::on('test1', function($data){echo $data;}); // 用闭包会响应这个事件，并且接收参数。
 
-Event::trigger('test1', 'Test Param'); 触发这个事件。这个时候框架会自动调用已经注册的观察者去处理这个事件。并把参数传奇过去。
-Application::start(); //运行应用
+\Event::trigger('test1', 'Test Param'); 触发这个事件。这个时候框架会自动调用已经注册的观察者去处理这个事件。并把参数传奇过去。
+\Application::start(); //运行应用
 ```
 
 ##错误与异常处理
 Smile 内置了错误和异常处理。如果在运行的过程中遇到了错误，框架会把错误转化成`ErrorException`错误异常并抛出。交由异常处理，做统一处理。  
+
 如果错误是`E_NOTICE`级别的。框架在开始调试模式的时候(即`define('DEBUG', true);`)的时候。会输出提示信息。并不会终止执行。当关闭调试模式的时候，框架并不会对这个级别的错误输出信息。
+
 如果在运行的过程中遇到了其他级别错误或未被捕获的异常，框架或终止终止执行。并输出信息。开启调试模式的时候，会输出友好的调试信息，便于调试。如：
 
 ```
@@ -455,10 +516,125 @@ include 'smile.php'; // 引入框架。
 
 ......
 
-Application::start(); //运行应用
+\Application::start(); //运行应用
 ```
 无论是否开启调试模式，框架在遇到错误或者未捕获的异常的时候，都会写入一条错误日志。会记录当前用户IP，错误级别。以及错误堆栈信息。方便排查和处理错误或异常。
+
 ##日志
+Smile 提供了便捷的日志功能。可以在代码里方便的记录日志，方便调试和发现问题。  
+日志文件会按每天一个生成，日志文件目录在常量 `LOG_PATH` 中定义。默认是`{APP_PATH}/Log/`目录。可以在引入框架文件前自定义这个常量，来修改日志文件的路径。
+
+```
+<?php
+
+define('LOG_PATH', '/var/log/site/'); // 修改日志文件路径。
+include 'smile.php'; // 引入框架。
+
+......
+
+\Application::start(); //运行应用
+
+```
+
+###日志使用
+Smile 的日志默认分为 `ERROR`,`WARNING`,`NOTICE`,`INFO`,`DEBUG` 五种日志级别，方便对日志进行筛选和分类。其中 `DEBUG` 级别的日志只有在调试模式下才会被写入到文件。  
+为了方便调用的，框架已经封装了，这五种级别操作。`\Log::error()` 对应 `ERROR` 级别错误，`\Log::info()` 对应`INFO` 级别错误。
+
+```
+<?php
+
+define('DEBUG', true); // 开启调试模式。
+include 'smile.php'; // 引入框架。
+\Log::error('Error Logs'); // 记录一条 error 级别的错误
+\Log::warning('Warning Logs'); // 记录一条 warning 级别的错误
+\Log::notice('Notice Logs'); // 记录一条 notice 级别的错误
+\Log::info('Info Logs'); // 记录一条 info 级别的错误
+\Log::debug('Debug Logs'); // 记录一条 debug 级别的错误
+
+```
+
+如果以上五中日志级别不能满足使用，框架有封装`\Log::write()` 方法，这个方法有两个参数，第一个参数是日志的内容。第二个参数是日志的分类或者级别标识。`\Log::error()`方法其实就是`\Log::write($msg, 'ERROE')`这样去实现的。要添加一个日志级别，在第二个参数里添加即可。
+
+```
+<?php
+
+define('DEBUG', true); // 开启调试模式。
+include 'smile.php'; // 引入框架。
+\Log::error('Error Logs'); // 记录一条 error 级别的错误
+\Log::write('Error Logs', 'ERROE'); // 和\Log::error('Error Logs');的作用是一样的。
+\Log::write('Error Logs', ''); // 和\Log::error('Error Logs');的作用是一样的。
+\Log::write('Admin login','Admin'); // 添加一个新的日志，日志类型为 Admin
+
+```
+###日志内容
+日志会按天生成一个文件，会自动在当天的日志文件里追歼日志。每条日志是一行。格式类似  
+
+```
+[2015-12-09 09:46:01][127.0.0.1][DEBUG] debug message
+[2015-12-09 09:46:51][127.0.0.1][ERROR] error message
+```
+
+日志的每一条都是由`[写入时间][客户端IP][日志级别或分类] 日志内容` 四个元素组成。可以按照这个规则去解析或者批处理日志文件。
+
 ##多语言
-##类反射
+
+如果你的产品是面向国际用户的。Smile也提供了多语言的支持。当使用不同语言的用户访问的时候，框架会自动选择适合的语言给用用户。只需要你给对应的语言提供翻译包就可。  
+在 http 协议中，每种语言都有自己的代号，表示自己是哪种语言。比如`zh-CN`代表中文，`en-US`代表英文。可以通过`Request::getAcceptLang()` 方法查看用户使用的语言。只需要在配置好多语言包，框架会自动帮你做这些工作。  
+
+###目录结构
+语言包都在常量`LANG_PATH` 目录下，默认是`{APP_PATH}/Lang`目录。可以在引入框架文件前，定义`LANG_PATH` 这个常量来改变语言包的路径。  
+语言包的名字必须和语言代码完全一致，大小写敏感。目录结构如
+
+```
+── Lang/
+    ├── zh-CN.php
+    ├── zh-TW.php
+    └── en-US.php
+```
+###文件内容格式
+语言包文件内容必须是return 一个数组给include 如：
+
+```
+<?php
+return array(
+	'hello'=>'你好'
+);
+```
+
+这个数组索引(key)是个字符串，就是语言的标记。如：在`zh-CN.php` 中 `'hello' => '你好'`。在`en-US.php`中可以是`'hello'=>'Hello'`，这样在输出的时候框架会自动选择语言包里`hello`标识对应的输出。
+如果，要输出的内容不确定，需要根据情况发生变化。可以在设置的时候做好占位符。在输出的时候框架会用变量替换掉这个占位符如：
+
+```
+<?php
+return array(
+	'hello.man' => '你好，name'
+);
+```
+在使用的时候这样调用
+
+```
+<?php
+
+......
+echo \Lang::get('hello.man', array('name' => '张三'));
+......
+```
+
+这样打印出来的内容就是`你好，张三`。如果设置了占位符，在调用的时候没有给复制。那么就会直接输出占位符，如：`你好，name`。  
+这个占位符可以是任何字符串标识，可以自行选择适当的字符串做占位符，可以充当默认输出。
+
+###使用多语言
+
+框架封装了两个方法`\Lang::get()`，`\Lang::say()`。第一个方法的作用是把翻译后的内容返回给调用者，并不会主动输出。`\Lang::say()` 不会返回信息给调用者。会把翻译后的内容直接输出。相当于`echo \Lang::get('hello.man')`；这样在开发过程中可以根据情况，使用两个方法。两个方法的调用和参数是一致的。  
+
+两个方法都有两个参数。第一个参数是要调用的标识，即语言包数组里面的索引(key)，第二个参数是可选参数，如果想把索引对应的值提替换掉。只需要传第一个数组，且这个数组的索引就是要替换掉的关键字，数组的值是用来替换的字符。支持同时替换多个关键字。
+
+```
+<?php
+
+......
+echo \Lang::get('hello.man', array('name' => '张三', 'face' => '^_^'));
+......
+```
+
 ##建议反馈
