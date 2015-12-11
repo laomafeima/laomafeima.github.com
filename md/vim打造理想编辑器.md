@@ -41,6 +41,7 @@ olorscheme solarized " 设置默认主题
 set background=dark " 默认使用 dark 模式
 set number " 显示行号
 set tabstop=4 " tab 的宽度
+set expandtab " 用空格代替 tab
 set shiftwidth=4 "自动缩进的时候 tab 的宽度
 set softtabstop=4 "退格键的时候 tab 宽度
 hi Pmenu guibg=darkslategray " 下拉菜单的颜色
