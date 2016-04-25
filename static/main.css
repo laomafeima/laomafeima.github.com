@@ -36,7 +36,7 @@ header a:hover {
 .content {
     position: relative;
     width: 100%;
-    max-width: 1000px;
+    max-width: 700px;
     margin: 60px auto auto;
 }
 
@@ -57,8 +57,7 @@ ul.posts, ul.posts li {
 }
 
 .content h3 {
-    font-size: 1.6em;
-
+    font-weight: 300;
 }
 
 .content h1, .content h2, .content h3, .content h4, .content h5, .content h6 {
@@ -134,15 +133,6 @@ footer a:hover {
 }
 #back-top:hover{
     color: #269;
-}
-.markdown-body{
-  position: relative;
-  width: 100%;
-  max-width: 1000px;
-  margin: 60px auto auto;
-}
-.markdown-body h1 {
-    text-align: center;
 }
 
 @media (max-width: 480px){

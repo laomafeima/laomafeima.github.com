@@ -8,11 +8,12 @@ $ sudo adduser --ingroup hadoop hadoop
 ```
 
 编辑`/etc/sudoers`文件，在
-```
-root ALL=(ALL:ALL)ALL
-# 行下添加
-hadoop ALL=(ALL:ALL) ALL
-```
+
+    root ALL=(ALL:ALL)ALL
+    # 行下添加
+    hadoop ALL=(ALL:ALL) ALL
+
+
 否则无法sudo  
 然后切换用hadoop登录  
 

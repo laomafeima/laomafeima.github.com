@@ -1,4 +1,5 @@
 # 打造理想 Vim 编辑器
+
 尝试过很多种编辑器，Emacs，Notepad++，Sublime Text，Komodo Edit，EditPlus等。都因种种原因始终难以顺手。最终还是走上了 Vim 这条道路。这里介绍一下如何把 Vim 打造成理想的编辑器。  
 当然，这里只介绍 Vim 相关的信息，不涉及编辑器之战。
 
@@ -20,15 +21,15 @@ Linux 用户我相信都有自己解决这个问题的能力。
 在安装插件和配置 Vim 的时候在 `~/.vimrc` 和 `~/.vim/` 目录进行。优点是我们在重新安装或者转移机器的时候，只需要复制配置文件，和目录过去即可。方便易用。   
 打开这个 目录会看到很多子目录
 
-```
-autoload
-colors
-doc
-ftdetect
-lib
-plugin
-syntax
-```
+
+    autoload
+    colors
+    doc
+    ftdetect
+    lib
+    plugin
+    syntax
+
 安装插件和主题的时候，把配置插件内容复制到这些目录即可。重启 Vim 生效。
 
 ## 配置 Vim
@@ -36,59 +37,57 @@ syntax
 修改 Vim  的默认配置可以在 vimrc  文件中修改
 以下是常用配置信息说明  
 
-```
-syntax on " 开启高亮                                                                                                                                                                                        
-set background=dark " 默认使用 dark 模式
-set number " 显示行号
-set tabstop=4 " tab 的宽度
-set shiftwidth=4 "自动缩进的时候 tab 的宽度
-set softtabstop=4 "退格键的时候 tab 宽度
-set cindent " 设置自动缩紧
-hi Pmenu guibg=darkslategray " 下拉菜单的颜色
-set scrolloff=2 " 当光标距离下面两行的时候就进行滚动
-set number " 显示行号
-set hlsearch " 搜索高亮
-set cursorline " 突出显示当前行
-set lines=40 columns=130 " 设置默认启动窗口大小
-set cc=80 " 设置第80 列显示一根线
-set guifont=Monaco:h13 " 设置字体， 如果多种字体，用 "," 隔开
-hi ColorColumn ctermbg=darkgray guibg=darkgray " 设置第 80 行线的颜色
-set helplang=cn " 默认使用中文
-filetype on " 自动检测文件类型                                 
-filetype plugin on " 插件支持文件类型帮助信息
-set laststatus=2 " 默认显示状态栏 
-set statusline=%<%f\ %LL\ %m%r%h%w%{(&fenc!=''?&fenc:&enc).':'.&ff}\ %Y%=%04l,%04v\ %p%%\ " 设置状态栏显示内容
-set ruler " 在编辑过程中，在右下角显示光标位置的状态行
-
-if version >= 700 " 进入插入模式时改变状态栏颜色（仅限于Vim 7）
-        au InsertEnter * hi StatusLine guibg=darkred guifg=darkgray gui=none
-        au InsertLeave * hi StatusLine guibg=darkgreen guifg=darkgray gui=none
-endif
-
-"alt+数字切换Table快捷键设置
-:nn <M-1> 1gt
-:nn <M-2> 2gt
-:nn <M-3> 3gt
-:nn <M-4> 4gt
-:nn <M-5> 5gt
-:nn <M-6> 6gt
-:nn <M-7> 7gt
-:nn <M-8> 8gt
-:nn <M-9> 9gt
-:nn <M-0> :tablast<CR>
-```
+    syntax on " 开启高亮
+    set background=dark " 默认使用 dark 模式
+    set number " 显示行号
+    set tabstop=4 " tab 的宽度
+    set shiftwidth=4 "自动缩进的时候 tab 的宽度
+    set softtabstop=4 "退格键的时候 tab 宽度
+    set cindent " 设置自动缩紧
+    hi Pmenu guibg=darkslategray " 下拉菜单的颜色
+    set scrolloff=2 " 当光标距离下面两行的时候就进行滚动
+    set number " 显示行号
+    set hlsearch " 搜索高亮
+    set cursorline " 突出显示当前行
+    set lines=40 columns=130 " 设置默认启动窗口大小
+    set cc=80 " 设置第80 列显示一根线
+    set guifont=Monaco:h13 " 设置字体， 如果多种字体，用 "," 隔开
+    hi ColorColumn ctermbg=darkgray guibg=darkgray " 设置第 80 行线的颜色
+    set helplang=cn " 默认使用中文
+    filetype on " 自动检测文件类型                                 
+    filetype plugin on " 插件支持文件类型帮助信息
+    set laststatus=2 " 默认显示状态栏 
+    set statusline=%<%f\ %LL\ %m%r%h%w%{(&fenc!=''?&fenc:&enc).':'.&ff}\ %Y%=%04l,%04v\ %p%%\ " 设置状态栏显示内容
+    set ruler " 在编辑过程中，在右下角显示光标位置的状态行
+    
+    if version >= 700 " 进入插入模式时改变状态栏颜色（仅限于Vim 7）
+            au InsertEnter * hi StatusLine guibg=darkred guifg=darkgray gui=none
+            au InsertLeave * hi StatusLine guibg=darkgreen guifg=darkgray gui=none
+    endif
+    
+    "alt+数字切换Table快捷键设置
+    :nn <M-1> 1gt
+    :nn <M-2> 2gt
+    :nn <M-3> 3gt
+    :nn <M-4> 4gt
+    :nn <M-5> 5gt
+    :nn <M-6> 6gt
+    :nn <M-7> 7gt
+    :nn <M-8> 8gt
+    :nn <M-9> 9gt
+    :nn <M-0> :tablast<CR>
 
 ### 状态栏配置
 状态栏可以自定义显示一些内容，方便自己查看一些常用的信息
-```
-set laststatus=2 " 默认显示状态栏 
-set statusline=%<%f\ %LL\ %m%r%h%w%{(&fenc!=''?&fenc:&enc).':'.&ff}\ %Y%=%04l,%04v\ %p%%\ " 设置状态栏显示内容
-set ruler " 在编辑过程中，在右下角显示光标位置的状态行
-```
+
+    set laststatus=2 " 默认显示状态栏 
+    set statusline=%<%f\ %LL\ %m%r%h%w%{(&fenc!=''?&fenc:&enc).':'.&ff}\ %Y%=%04l,%04v\ %p%%\ " 设置状态栏显示内容
+    set ruler " 在编辑过程中，在右下角显示光标位置的状态行
+
 对应的，会在底部的状态栏显示出
-```
-index.php 60L utf-8:unix PHP             0036,0016 60%
-```
+
+    index.php 60L utf-8:unix PHP             0036,0016 60%
+
 这样的信息分表代表着
 index.php 是文件的路径  
 60L 是文件的总行数  
@@ -139,12 +138,13 @@ unix PHP 是文件类型
 
 状态除了可以定制展示内容还可以定制在不同模式下的颜色。
 为了方便的区分插入模式和普通模式配置在不同的模式下现实不同的颜色
-```
-if version >= 700 " 进入插入模式时改变状态栏颜色（仅限于Vim 7）
+
+
+    if version >= 700 " 进入插入模式时改变状态栏颜色（仅限于Vim 7）
         au InsertEnter * hi StatusLine guibg=darkred guifg=darkgray gui=none
         au InsertLeave * hi StatusLine guibg=darkgreen guifg=darkgray gui=none
-endif
-```
+    endif
+
 
 ### 状态栏插件
 如果你不想折腾，那么也有现成的插件可以去直接使用优秀的配置方案。
