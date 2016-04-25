@@ -23,6 +23,10 @@ a {
     margin: 40px 0 0;
 }
 
+header {
+	text-align:center;
+	color:#ddd;
+}
 .content {
     position: relative;
     width: 100%;
