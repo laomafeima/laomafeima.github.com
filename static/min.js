@@ -6,13 +6,13 @@ function totop()
     }
     else
     {
-        document.body.scrollTop -= 15;
+        document.body.scrollTop -= document.body.scrollTop * 0.02;
     }
 }
 
 function back_top()
 {
-    document.interval_id = setInterval("totop();",1);
+    document.interval_id = setInterval("totop();", 4);
     return false;
 }
 
