@@ -1,6 +1,7 @@
 body {
     font-family:'Helvetica Neue', 'Microsoft Jhenghei', 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;
     line-height:1.8em;
+	font-size:14px;
     padding:1em;
     margin:auto;
 }
@@ -131,8 +132,4 @@ table td {
 }
 table tr:nth-child(2n) td {
     background-color: #f2f2f2;
-}
- 
-@media only screen and (min-width: 480px) {
-    body{font-size:14px;}
 }
