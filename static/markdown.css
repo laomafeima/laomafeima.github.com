@@ -1,9 +1,8 @@
-body{
+body {
     font-family:'Helvetica Neue', 'Microsoft Jhenghei', 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;
     line-height:1.8em;
     padding:1em;
     margin:auto;
-    max-width:700px;
 }
  
 h1, h2, h3, h4, h5, h6 {

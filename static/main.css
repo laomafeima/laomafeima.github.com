@@ -1,6 +1,8 @@
 body {
     -webkit-font-smoothing: antialiased;
     font-family: 'Helvetica Neue', 'Microsoft Jhenghei', 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;
+    max-width:700px;
+    margin:auto;
 }
 
 a {
@@ -36,7 +38,6 @@ header a:hover {
 .content {
     position: relative;
     width: 100%;
-    max-width: 700px;
     margin: 60px auto auto;
 }
 
@@ -104,8 +105,6 @@ ul.posts .datetime {
 
 footer {
     width: 100%;
-    max-width: 700px;
-    margin: auto;
     padding: 30px 0 30px;
     text-align: center;
 }
