@@ -20,13 +20,13 @@ a {
 }
 
 
-#go-back-home {
-    margin: 40px 0 0;
-}
-
 header {
 	text-align:center;
 	color:#ddd;
+    margin-bottom:40px;
+}
+header a#back_home {
+    float: left;
 }
 .content {
     position: relative;
