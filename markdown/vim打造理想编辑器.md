@@ -1,5 +1,5 @@
 # 打造理想 Vim 编辑器
-
+{2015-12-23}
 尝试过很多种编辑器，Emacs，Notepad++，Sublime Text，Komodo Edit，EditPlus等。都因种种原因始终难以顺手。最终还是走上了 Vim 这条道路。这里介绍一下如何把 Vim 打造成理想的编辑器。  
 当然，这里只介绍 Vim 相关的信息，不涉及编辑器之战。
 
@@ -88,14 +88,14 @@ Linux 用户我相信都有自己解决这个问题的能力。
 
     index.php 60L utf-8:unix PHP             0036,0016 60%
 
-这样的信息分表代表着
-index.php 是文件的路径  
-60L 是文件的总行数  
-utf－8 是文件使用的编码格式
-unix PHP 是文件类型  
-0036,0016 是当前光标所在为在位置第 36 行，第16个字符
-60％ 是当前光标所在行，在文件中的位置百分比
-当然还可以显示文件大小，字符数等等信息，可以根据自己的需求去配置
+    这样的信息分表代表着
+    index.php 是文件的路径  
+    60L 是文件的总行数  
+    utf-8 是文件使用的编码格式
+    unix PHP 是文件类型  
+    0036,0016 是当前光标所在为在位置第 36 行，第16个字符
+    60％ 是当前光标所在行，在文件中的位置百分比
+    当然还可以显示文件大小，字符数等等信息，可以根据自己的需求去配置
 
 
 |  参数  |  意义  |
@@ -151,12 +151,11 @@ unix PHP 是文件类型
 [Powerline](https://github.com/powerline/powerline) ，[vim-airline](https://github.com/vim-airline/vim-airline) 两个插件都有漂亮优秀的状态栏配置。
 ### <leader> 前缀键
 在各类 Vim 插件帮助文档中经常出现 <leader>，即，前缀键。Vim 自带有很多快捷键，再加上各类插件的快捷键，大量快捷键出现在单层空间中难免引起冲突，为缓解该问题，引入了前缀键 <leader>。
-默认情况下 <leader> 是 `\` 键。当遇到需要 <leader>cc快捷键的时候可以快速的按下 `\cc` 实现
+默认情况下 <leader> 是 ` \ ` 键。当遇到需要 <leader>cc快捷键的时候可以快速的按下 `\cc` 实现
 如果想要修改前缀键可以添加配置
 
-```
-let mapleader=";"
-```
+    let mapleader=";"
+
 
 ### 快捷键配置
 Vim 操作过程中希望把操作过程给予简化，可以自定义一些快捷键
@@ -169,29 +168,30 @@ Vim 操作过程中希望把操作过程给予简化，可以自定义一些快�
 下载[Vimcdoc](http://sourceforge.net/projects/vimcdoc/files/) 根据自己系统选择不同的文件，下载并安装。重启 Vim ，执行 `help` 即可看到中文帮助信息。
 
 ### NERDTree 目录浏览
+
 NERDTree 基本是必备插件，它可以显示目录与文件结构。方便浏览。同时它也支持书签（Bookmark）可以方便的保存项目路径。  
 同时，NERDTree 也支持插件，可以显示 git 状态等。插件目录位于 `~/.vim/nerdtree_plugin/`  
 下载地址 [NERDTree](https://github.com/scrooloose/nerdtree)  
 下载完成后把文件复制到 `~/.vim/` 在配置文件里添加一下配置  
 这里推荐两个插件 [vim-nerdtree-tabs](https://github.com/jistr/vim-nerdtree-tabs)，可以使文件与窗口之间的操作更加方便。[nerdtree-git-plugin](https://github.com/Xuyuanp/nerdtree-git-plugin)可以在目录结构里面直接展示 Git 状态。
 
-```
-autocmd VimEnter * NERDTree " 在 vim 启动的时候默认开启NERDTree（autocmd 可以缩写为 au）
-nmap <F2> :NERDTreeTabsToggle<CR> " 按下 F2 调出/隐藏 NERDTree
 
-“ 如果你也使用Vim diff ，但是不想在这个时候自动启动 NERDTree 的时候
-if &diff                                                                    
-    autocmd VimEnter * NERDTreeClose                                        
-else                                                                        
-    autocmd VimEnter * NERDTree " 默认启动 NERDTree                         
-    let NERDTreeShowBookmarks=1 " 默认显示书签                              
-    let NERDTreeWinSize=30 " 设置目录窗口宽度                               
-    let g:nerdtree_tabs_open_on_console_startup=1                           
-    let g:nerdtree_tabs_focus_on_files=1 " 设置 打开文件后文件窗口获得焦点  
-    let g:nerdtree_tabs_smart_startup_focus=1 " 启动时焦点自动调整          
-    let NERDTreeMinimalUI=1 " 不显示帮助信息                                
-endif
-```
+    autocmd VimEnter * NERDTree " 在 vim 启动的时候默认开启NERDTree（autocmd 可以缩写为 au）
+    nmap <F2> :NERDTreeTabsToggle<CR> " 按下 F2 调出/隐藏 NERDTree
+
+    “ 如果你也使用Vim diff ，但是不想在这个时候自动启动 NERDTree 的时候
+    if &diff                                                                    
+        autocmd VimEnter * NERDTreeClose                                        
+    else                                                                        
+        autocmd VimEnter * NERDTree " 默认启动 NERDTree                         
+        let NERDTreeShowBookmarks=1 " 默认显示书签                              
+        let NERDTreeWinSize=30 " 设置目录窗口宽度                               
+        let g:nerdtree_tabs_open_on_console_startup=1                           
+        let g:nerdtree_tabs_focus_on_files=1 " 设置 打开文件后文件窗口获得焦点  
+        let g:nerdtree_tabs_smart_startup_focus=1 " 启动时焦点自动调整          
+        let NERDTreeMinimalUI=1 " 不显示帮助信息                                
+    endif
+
 
 ### NERDCommenter 快速注释插件
 NERDCommenter 是 NERDTree 作者的另一插件，可以在各种文档中实现方便快捷的注释功能。
@@ -228,12 +228,12 @@ Gitgutter 是一个可以显示每行的 Git 状态的插件。和nerdtree-git-p
 下载地址 [neocomplcache.vim](https://github.com/Shougo/neocomplcache.vim) 
 下载后安装到 `~/.vim/` 目录，并在 vimrc 文件中添加以下配置 
 
-```
-let g:neocomplcache_enable_at_startup = 1 " 默认启动 Neocomplcache 
-inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"  "支持 Tab 选择补全项
-```
 
-## 周周边
+    let g:neocomplcache_enable_at_startup = 1 " 默认启动 Neocomplcache 
+    inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"  "支持 Tab 选择补全项
+
+
+## 周边
 
 习惯了 Vim 的操作方式后，会觉得非常方便，尤其对我这种用鼠标手疼的人来说简直就是福音。
 如果能在浏览网页的时候也能使用 Vim 的操作该多好，vimium 插件就是来实现这个功能的。  
