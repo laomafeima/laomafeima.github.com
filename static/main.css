@@ -32,7 +32,7 @@ header a#back_home {
     position: relative;
     width: 100%;
 	float:left;
-    margin: 40px auto auto;
+    margin: auto;
 }
 
 ul.posts, ul.posts li {
