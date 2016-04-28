@@ -125,9 +125,12 @@ footer a:hover {
     bottom: 0;
     font-size: 4em;
     color: #333;
+    margin-bottom:30px;
+    margin-right:10px;
 }
 #back-top:hover{
     color: #269;
+    text-decoration: blink;
 }
 
 @media (max-width: 480px){
