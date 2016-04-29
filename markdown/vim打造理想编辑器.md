@@ -238,3 +238,7 @@ Gitgutter 是一个可以显示每行的 Git 状态的插件。和nerdtree-git-p
 习惯了 Vim 的操作方式后，会觉得非常方便，尤其对我这种用鼠标手疼的人来说简直就是福音。
 如果能在浏览网页的时候也能使用 Vim 的操作该多好，vimium 插件就是来实现这个功能的。  
 下载地址[Vimium 插件](https://chrome.google.com/webstore/detail/dbepggeogbaibhgnhhndojpepiihcmeb) 
+
+## 我的配置
+
+附上我的 vim 配置，里面有带注释，可以参考。[.vim](https://github.com/laomafeima/.vim)
