@@ -20,8 +20,8 @@ $ sudo adduser --ingroup hadoop hadoop
 生成ssh密钥
 ```
 $ mkdir .ssh
-$ ssh-keygen -t dsa -P '' -f ~/.ssh/id_dsa 
-$ cat ~/.ssh/id_dsa.pub >> ~/.ssh/authorized_keys
+$ ssh-keygen -t rsa -P '' -f ~/.ssh/id_rsa 
+$ cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
 ```
 测试登录
 ```

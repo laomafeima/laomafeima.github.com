@@ -60,4 +60,62 @@ tmux 默认的前缀键为 `Control+b` 即同时按下 `Control` 键和 `b` 键�
 
 ### 窗口
 进入一个会话，其实所看到的，所操作的就是一个窗口。一个会话可以有多个窗口，并可以自由切换。
-每个窗口都有自己的编号，默认从 0 开始。也可以给每个窗口定义一个名字。方便了解每个窗口
+每个窗口都有自己的编号，默认从 0 开始。也可以给每个窗口定义一个名字。方便了解每个窗口。
+进入会话后，默认只有一个窗口，`{前缀键＋c}` 会创建一个新窗口。
+`{前缀键＋,}` 可以重命名一个窗口，比如一个叫 edit 一个叫 console 这样就能明确指导窗口的用处了。
+窗口操作相关的快捷键
+
+| 快捷键 | 功能 |
+|:-|:-|
+| {前缀键+c} | 创建一个窗口 |
+| {前缀键+,} | 重命名当前窗口 |
+| {前缀键+n} | 切换到前一个窗口 |
+| {前缀键+p} | 切换到后一个窗口 |
+| {前缀键+l} | 在两个窗口间来回切换 |
+
+## 我的配置
+### 配置
+
+	# 绑定快捷键
+	unbind C-b
+	set -g prefix C-a
+	# 调整窗口大小快捷键
+	bind H resize-pane -L 5
+	bind J resize-pane -D 5
+	bind K resize-pane -U 5
+	bind L resize-pane -R 5
+	# 显示256色
+	set -g default-terminal "screen-256color"
+	# 设置状态栏颜色
+	set -g status-fg white
+	set -g status-bg black
+	set -g status-left-length 40
+	set -g status-left "#[fg=green]#(whoami):#S #[fg=yellow]#I #[fg=cyan]#P"
+	set -g status-right "#[fg=cyan]%Y/%m/%d %H:%M"
+	set -g status-utf8 on
+	# 窗口活动通知
+	setw -g monitor-activity on
+	set -g visual-activity on
+	# 处理鼠标
+	set -g mouse-utf8 on
+	setw -g mouse on
+	# 设置 vim 模式操作缓冲区
+	setw -g mode-keys vi
+
+### 脚本
+
+	session_exists() {
+	  tmux has-session -t "$1" 2>/dev/null
+	}
+	if session_exists "python"
+	then
+		tmux attach -t python
+	else
+		tmux new-session -s python -n editor -d
+		tmux split-window -v -p 15 -t python:0.0
+		tmux new-window -n console -t python
+		tmux select-window -t python:0
+		tmux select-pane -t python:0.0
+		#tmux send-keys -t development 'cd ~/devproject' C-m
+		tmux attach -t python
+	fi
