@@ -22,12 +22,18 @@
     fullchain.pem: cert.pem and chain.pem combined
     privkey.pem: Your certificate's private key
 
+生成 dhparam.pem
+
+	sudo openssl dhparam -out /etc/letsencrypt/live/example.com／dhparam.pem 2048	
+
 配置 Nginx 
 
     listen 443 ssl;
     server_name example.com www.example.com;
     ssl_certificate /etc/letsencrypt/live/example.com/fullchain.pem;
     ssl_certificate_key /etc/letsencrypt/live/example.com/privkey.pem;
+    ssl_dhparam /etc/letsencrypt/live/example.com/dhparam.pem;
+
 
 
 配置 HTTP 转发 HTTPS
