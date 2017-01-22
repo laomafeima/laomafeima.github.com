@@ -6,7 +6,7 @@ function totop()
     }
     else
     {
-        document.body.scrollTop -= document.body.scrollTop * 0.02;
+        document.body.scrollTop -= document.body.scrollTop * 0.025;
     }
 }
 
