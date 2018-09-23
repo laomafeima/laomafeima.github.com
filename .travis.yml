@@ -10,7 +10,6 @@ branches:
 install:
   - pip install -r requirements.txt
 
-# 执行清缓存，生成网页操作
 script:
   - python blog.py
   - git stash
@@ -18,8 +17,7 @@ script:
   - git stash pop
   - git add .
 
-# 设置git提交名，邮箱；替换真实token到_config.yml文件，最后depoy部署
-after_script:
+after_surcess:
   - git config user.name "ma"
   - git config user.email "laomafeima@gmail.com"
   - git commit -m ":memo:\ Update docs by CI"
