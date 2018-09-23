@@ -5,8 +5,8 @@ python:
 
 branches:
   only:
-    - source
     - master
+    - source
 
 install:
   - pip install -r requirements.txt
