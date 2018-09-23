@@ -12,15 +12,16 @@ install:
 
 script:
   - python blog.py
+  - git add .
   - git stash
   - git checkout master
   - git stash pop
   - git add .
+  - git commit -m ":memo:\ Update docs by CI"
 
 after_surcess:
   - git config user.name "ma"
   - git config user.email "laomafeima@gmail.com"
-  - git commit -m ":memo:\ Update docs by CI"
   - git push --force --quiet "https://${CI_TOKEN}@${GH_REF}" master:master
 # End: Build LifeCycle
 
