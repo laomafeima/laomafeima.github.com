@@ -13,16 +13,9 @@ install:
 
 script:
   - python blog.py
-  - git fetch origin master
-  - git branch -a
-  - git add .
-  - git stash
-  - git checkout master
-  - git stash pop
-  - git add .
-  - git commit -m ":memo:\ Update docs by CI"
 
 after_surcess:
+  - deploy
   - git config user.name "ma"
   - git config user.email "laomafeima@gmail.com"
   - git push --force --quiet "https://${CI_TOKEN}@${GH_REF}" master:master
@@ -31,3 +24,11 @@ after_surcess:
 env:
  global:
    - GH_REF: github.com/laomafeima/laomafeima.github.io.git
+
+deploy:
+  provider: pages
+  skip-cleanup: true
+  github-token: $CI_TOKEN
+  keep-history: true
+  on:
+    branch: master
