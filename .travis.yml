@@ -12,6 +12,7 @@ install:
 
 script:
   - python blog.py
+  - git branch -a
   - git add .
   - git stash
   - git checkout master
