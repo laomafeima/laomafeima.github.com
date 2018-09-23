@@ -13,15 +13,15 @@ install:
 # 执行清缓存，生成网页操作
 script:
   - python blog.py
+  - git stash
+  - git checkout master
+  - git stash pop
+  - git add .
 
 # 设置git提交名，邮箱；替换真实token到_config.yml文件，最后depoy部署
 after_script:
-  - ls
   - git config user.name "ma"
   - git config user.email "laomafeima@gmail.com"
-  - git checkout master
-  - git merge source
-  - git add .
   - git commit -m ":memo:\ Update docs by CI"
   - git push --force --quiet "https://${CI_TOKEN}@${GH_REF}" master:master
 # End: Build LifeCycle
