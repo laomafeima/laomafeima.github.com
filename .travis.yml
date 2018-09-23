@@ -15,8 +15,16 @@ script:
   - python blog.py
 
 after_surcess:
-  - deploy
-  - git config user.name "ma"
+  - git clone https://${GH_REF} .deploy_git
+  - cd .deploy_git
+  - git checkout master
+  - mv ../tags/ ./tags/
+  - mv ../blog/ ./blog/
+  - mv ../img/ ./img/
+  - mv ../*.html ./
+  - cd ./public
+  - git init
+  - git config user.name "laomafeima"
   - git config user.email "laomafeima@gmail.com"
   - git push --force --quiet "https://${CI_TOKEN}@${GH_REF}" master:master
 # End: Build LifeCycle
@@ -24,11 +32,3 @@ after_surcess:
 env:
  global:
    - GH_REF: github.com/laomafeima/laomafeima.github.io.git
-
-deploy:
-  provider: pages
-  skip-cleanup: true
-  github-token: $CI_TOKEN
-  keep-history: true
-  on:
-    branch: master
