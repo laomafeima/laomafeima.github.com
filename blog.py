@@ -53,7 +53,7 @@ blog_item_tpl = """
 <footer>
     <a href="/about.html" target="_blank" class="muted">关于老馬</a>
 </footer>
-<script src="../static/min.js"></script>
+<script src="/static/min.js"></script>
 </body>
 </html>
 """
@@ -145,7 +145,7 @@ tags_tpl = """
 <footer>
     <a href="/about.html" target="_blank" class="muted">关于老馬</a>
 </footer>
-<script src="../static/min.js"></script>
+<script src="/static/min.js"></script>
 </body>
 </html>
 """
