@@ -1,12 +1,13 @@
 function totop()
 {
-    if(document.body.scrollTop < 1)
+    if(window.pageYOffset < 1)
     {
         clearInterval(document.interval_id);
     }
     else
     {
-        document.body.scrollTop -= document.body.scrollTop * 0.025;
+        height = window.pageYOffset * 0.975
+        window.scroll(0, height)
     }
 }
 
@@ -18,7 +19,7 @@ function back_top()
 
 document.onscroll = function()
 {
-    if(document.body.scrollTop > 400)
+    if(window.pageYOffset > 400)
     {
         var aEle = document.getElementById("back-top");
         if(!aEle)
@@ -26,6 +27,7 @@ document.onscroll = function()
             aEle = document.createElement("a");
             aEle.id = "back-top";
             aEle.href = "#go-back-home";
+            aEle.title = "返回顶部";
             aEle.innerText = "^";
             aEle.onclick = back_top;
             document.body.appendChild(aEle);
