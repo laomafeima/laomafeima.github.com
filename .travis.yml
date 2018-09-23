@@ -20,8 +20,10 @@ after_success:
   - mv ../tags/* ./tags/
   - mv ../blog/* ./blog/
   - mv ../markdown/* ./markdown/
+  - mv ../static/* ./static/
   - mv ../img/* ./img/
   - mv ../*.html ./
+  - mv ../README.md ./
   - git config user.name "laomafeima"
   - git config user.email "laomafeima@gmail.com"
   - git init
