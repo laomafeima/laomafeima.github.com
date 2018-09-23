@@ -14,7 +14,7 @@ install:
 script:
   - python blog.py
 
-after_surcess:
+after_success:
   - git clone https://${GH_REF} .deploy_git
   - cd .deploy_git
   - git checkout master
