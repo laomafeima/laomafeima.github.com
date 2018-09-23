@@ -17,9 +17,10 @@ after_success:
   - git clone https://${GH_REF} .deploy_git
   - cd .deploy_git
   - git checkout master
-  - mv ../tags ./tags
-  - mv ../blog ./blog
-  - mv ../img ./img
+  - mv ../tags/* ./tags/
+  - mv ../blog/* ./blog/
+  - mv ../markdown/* ./markdown/
+  - mv ../img/* ./img/
   - mv ../*.html ./
   - git config user.name "laomafeima"
   - git config user.email "laomafeima@gmail.com"
