@@ -8,7 +8,7 @@ body {
 
 a {
     text-decoration: none;
-    color: #269;
+    color: #42b983;
     display: inline-block;
     vertical-align: baseline;
     zoom: 1;
@@ -23,11 +23,33 @@ a {
 header {
 	text-align:center;
 	color:#ddd;
-    margin-bottom:40px;
+    margin-top:40px;
 }
+body .markdown-body {
+    display:block;
+    clear:both;
+}
+
 header a#back_home {
     float: left;
 }
+
+header a.logo-link {
+    float:left;
+}
+header a.logo-link img {
+    float: left;
+    width: 50px;
+    margin-bottom: 20px;
+}
+
+
+time {
+    float:right;
+    color: #bbbbbb;
+    font-weight: bold;
+}
+
 .content {
     position: relative;
     width: 100%;
@@ -51,9 +73,10 @@ ul.posts, ul.posts li {
     list-style: none;
 }
 
-.content h3 {
+.content .post-name{
     font-weight: 300;
 	font-size:1em;
+    line-height:2;
 }
 
 .content h1, .content h2, .content h3, .content h4, .content h5, .content h6 {
@@ -74,15 +97,29 @@ ul.posts .datetime {
 }
 
 .content a {
-    border-bottom: 1px solid #1abc9c;
+    font-weight: bold;
 }
 
 .content a:hover {
 
-    border-bottom-color: #555;
-    color: #555;
-    text-decoration: none;
+    color: #267B54;
     background: repeat-x left bottom;
+}
+
+h2.tag-big {
+    float:left;
+}
+
+a.tag {
+    text-decoration: none;
+    font-weight: bold;
+    color: #bbbbbb;
+    padding-right: 6px;
+}
+
+a.tag:hover {
+    color: #1F1F1F;
+    cursor: pointer;
 }
 
 .muted {
@@ -96,6 +133,10 @@ ul.posts .datetime {
     -ms-transition: color 0.3s;
     -o-transition: color 0.3s;
     transition: color 0.3s;
+}
+
+.bottom {
+    clear:both;
 }
 
 footer {
@@ -116,7 +157,7 @@ footer #powered-by{
 }
 
 footer a:hover {
-    color: #1abc9c;
+    color: #42b983;
 }
 
 #back-top{
@@ -129,7 +170,7 @@ footer a:hover {
     margin-right:10px;
 }
 #back-top:hover{
-    color: #269;
+    color: #267B54;
     text-decoration: blink;
 }
 

@@ -46,10 +46,6 @@ hr {
     color: #CCCCCC;
     background-color: #CCCCCC;
 }
-time {
-    color:#969896;
-    font-size: 12px;
-} 
 p, blockquote, ul, ol, dl, li, table, pre {
     margin: 15px 0;
 }
@@ -89,8 +85,8 @@ pre > code {
 }
  
  
-a{ color: #269; text-decoration:none;}
-a:hover{ color: #1abc9c; text-decoration:underline;}
+a{ color: #42b983; text-decoration:none;}
+a:hover{ color: #267B54; text-decoration:none;}
  
 blockquote{
     color:#666666;
