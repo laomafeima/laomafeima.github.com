@@ -12,6 +12,7 @@ install:
 
 script:
   - python blog.py
+  - git fetch origin master
   - git branch -a
   - git add .
   - git stash
