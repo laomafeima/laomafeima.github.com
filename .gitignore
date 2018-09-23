@@ -1,7 +1,12 @@
+/tags/
+/blog/
+/tags.html
+/index.html
+
+
 *.py[cod]
 .idea
 *.swp
-index.html
 html/*
 # C extensions
 *.so

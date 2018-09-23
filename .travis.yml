@@ -18,7 +18,8 @@ script:
 after_script:
   - git config user.name "ma"
   - git config user.email "laomafeima@gmail.com"
-  - git clone https://${GH_REF} .deploy_git
+  - git clone https://${GH_REF}
+  - git checkout master
   - git init
   - git add .
   - git commit -m ":memo:\ Update docs by CI"
