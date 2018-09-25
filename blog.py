@@ -38,7 +38,7 @@ blog_item_tpl = """
 <body>
 <header>
     <a href="/" class="logo-link">
-        <img alt="img" src="https://raw.githubusercontent.com/laomafeima/laomafeima.github.io/master/static/favicon.png">
+        <img alt="img" src="/static/favicon.png">
     </a>
 </header>
 <div class="markdown-body">
@@ -72,7 +72,7 @@ index_tpl = """
 <body>
 <header>
     <a href="/" class="logo-link">
-        <img alt="img" src="https://raw.githubusercontent.com/laomafeima/laomafeima.github.io/master/static/favicon.png">
+        <img alt="img" src="/static/favicon.png">
     </a>
 </header>
 <div class="content">
@@ -134,7 +134,7 @@ tags_tpl = """
 <body>
 <header>
     <a href="/" class="logo-link">
-        <img alt="img" src="https://raw.githubusercontent.com/laomafeima/laomafeima.github.io/master/static/favicon.png">
+        <img alt="img" src="/static/favicon.png">
     </a>
 </header>
 <div class="bottom">
