@@ -20,8 +20,7 @@ blog_url = /blog/%%s.html
 tag_url = /tag/%%s.html
 """
 
-blog_item_tpl = """
-<!DOCTYPE html>
+blog_item_tpl = """<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
@@ -58,8 +57,7 @@ blog_item_tpl = """
 </html>
 """
 
-index_tpl = """
-<!DOCTYPE html>
+index_tpl = """<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
@@ -90,8 +88,7 @@ index_tpl = """
 </html>
 """
 
-tag_tpl = """
-<!DOCTYPE html>
+tag_tpl = """<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
@@ -119,8 +116,7 @@ tag_tpl = """
 </body>
 </html>
 """
-tags_tpl = """
-<!DOCTYPE html>
+tags_tpl = """<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
@@ -149,8 +145,6 @@ tags_tpl = """
 </body>
 </html>
 """
-
-
 
 
 class Blog(object):
