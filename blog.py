@@ -17,7 +17,7 @@ config = """
 [base]
 markdown = ./markdown/
 blog_url = /blog/%%s.html
-tag_url = /tags/%%s.html
+tag_url = /tag/%%s.html
 """
 
 blog_item_tpl = """
