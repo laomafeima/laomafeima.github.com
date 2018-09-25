@@ -19,7 +19,6 @@ after_success:
   - git checkout master
   - mv ../tags/* ./tags/
   - mv ../blog/* ./blog/
-  - mv ../markdown/* ./markdown/
   - mv ../static/* ./static/
   - mv ../img/* ./img/
   - mv ../*.html ./
