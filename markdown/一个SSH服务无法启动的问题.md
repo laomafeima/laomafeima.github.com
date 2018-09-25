@@ -1,6 +1,6 @@
 title: 一个 SSH 服务无法启动的问题
 date: 2018-09-24
-tags: VPS, 服务器, Ubuntu, DEBUG
+tags: 服务器
 
 # 一个 SSH 服务无法启动的问题
 

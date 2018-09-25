@@ -177,7 +177,7 @@ class Blog(object):
 
 
     def get_markdown(self):
-        markdown = Markdown(extensions=['tables', 'meta'])
+        markdown = Markdown(extensions=['tables', 'meta', 'fenced_code'])
         return markdown
 
     def start(self):
