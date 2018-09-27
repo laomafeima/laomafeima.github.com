@@ -180,6 +180,7 @@ class Blog(object):
         self.tpl_parser()
         self.loop_item()
         self.index_parser()
+        self.write_notes()
 
 
     def index_parser(self):
@@ -205,7 +206,8 @@ class Blog(object):
         f.close()
 
 
-    def write_notes(self, notes):
+    def write_notes(self):
+        notes = sorted(self.notes, key=lambda d: d['date'], reverse=True)
         html = self.index_tpl.render(seq=notes)
         f = open("notes.html", "w")
         f.write(html)
