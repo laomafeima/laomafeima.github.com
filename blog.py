@@ -157,6 +157,7 @@ class Blog(object):
         self.tag_tpl = None
         self.tags_tpl = None
         self.blogs = []
+        self.notes = []
 
     def config_parser(self):
         cfg = ConfigParser()
@@ -204,6 +205,15 @@ class Blog(object):
         f.close()
 
 
+    def write_notes(self, notes):
+        html = self.index_tpl.render(seq=notes)
+        f = open("notes.html", "w")
+        f.write(html)
+        f.close()
+
+
+
+
     def write_tag(self, tags):
         for tag_group in tags.values():
             html = self.tag_tpl.render(tag_group=tag_group)
@@ -241,7 +251,10 @@ class Blog(object):
         item['hash'] = md5(content).hexdigest()
         self.write_blog(item)
         del(item['content'])
-        self.blogs.append(item)
+        if(item['type'] == "blog"):
+            self.blogs.append(item)
+        else:
+            self.notes.append(item)
 
     def write_blog(self, item):
         html = self.blog_item_tpl.render(**item)
@@ -268,11 +281,12 @@ class Blog(object):
     def markdown_parser(self, text):
         md = self.get_markdown()
         html = md.convert(text)
-        if not all([(i in md.Meta.keys()) for i in ["title", "date"]]):
+        if not all([(i in md.Meta.keys()) for i in ["title", "date", "type"]]):
             return None
         result = {}
         result['title'] = ",".join(md.Meta['title'])
         result['date'] = ",".join(md.Meta['date'])
+        result['type'] = ",".join(md.Meta['type'])
         result['tags'] = self.get_md_tags(md.Meta['tags']) if "tags" in md.Meta.keys() else []
         result['url'] = self.get_url(result['title'], md.Meta)
         result['content'] = html
