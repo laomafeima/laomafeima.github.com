@@ -76,7 +76,7 @@ index_tpl = """<!DOCTYPE html>
 <div class="content">
     <ul class="posts">
         {% for item in seq %}
-        <li><dev class="post-name"><small class="datetime muted">{{ item.date }}</small><a href="{{ item.url }}">{{ item.title }}</a></dev></li>
+        <li><div class="post-name"><small class="datetime muted">{{ item.date }}</small><a href="{{ item.url }}">{{ item.title }}</a></div></li>
         {% endfor %}
     </ul>
 </div>
@@ -105,7 +105,7 @@ tag_tpl = """<!DOCTYPE html>
 <div class="content">
     <ul class="posts">
         {% for item in tag_group.blogs %}
-        <li><dev class="post-name"><small class="datetime muted">{{ item.date }}</small><a href="{{ item.url }}">{{ item.title }}</a></dev></li>
+        <li><div class="post-name"><small class="datetime muted">{{ item.date }}</small><a href="{{ item.url }}">{{ item.title }}</a></div></li>
         {% endfor %}
     </ul>
 </div>
@@ -207,7 +207,7 @@ class Blog(object):
 
     def write_notes(self, notes):
         html = self.index_tpl.render(seq=notes)
-        f = open("notes.html", "w")
+        f = open("notehtml", "w")
         f.write(html)
         f.close()
 
