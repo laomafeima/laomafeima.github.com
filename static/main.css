@@ -152,9 +152,12 @@ footer#about {
     text-align: left;
 }
 
+footer a {
+    margin: 0 3px 0 3px;
+}
+
 footer a:hover {
     color: #42b983;
-    margin: 0 3px 0 3px;
 }
 
 #back-top{

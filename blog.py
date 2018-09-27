@@ -50,9 +50,9 @@ blog_item_tpl = """<!DOCTYPE html>
     <time datetime="{{ date }}">{{ date }}</time>
 </div>
 <footer>
-    <a href="/tags.html" target="_blank" class="muted">标签</a>
-    <i></i>
-    <a href="/about.html" target="_blank" class="muted">关于</a>
+    <a href="/tags.html" target="_blank" class="muted"><i>标签</i></a>
+    <i>/</i>
+    <a href="/about.html" target="_blank" class="muted"><i>关于</i></a>
 </footer>
 <script src="/static/min.js"></script>
 </body>
@@ -83,9 +83,9 @@ index_tpl = """<!DOCTYPE html>
     </ul>
 </div>
 <footer>
-    <a href="/tags.html" target="_blank" class="muted">标签</a>
-    <i></i>
-    <a href="/about.html" target="_blank" class="muted">关于</a>
+    <a href="/tags.html" target="_blank" class="muted"><i>标签</i></a>
+    <i>/</i>
+    <a href="/about.html" target="_blank" class="muted"><i>关于</i></a>
 </footer>
 <script src="/static/min.js"></script>
 </body>
@@ -114,9 +114,9 @@ tag_tpl = """<!DOCTYPE html>
     </ul>
 </div>
 <footer>
-    <a href="/tags.html" target="_blank" class="muted">标签</a>
-    <i></i>
-    <a href="/about.html" target="_blank" class="muted">关于</a>
+    <a href="/tags.html" target="_blank" class="muted"><i>标签</i></a>
+    <i>/</i>
+    <a href="/about.html" target="_blank" class="muted"><i>关于</i></a>
 </footer>
 <script src="/static/min.js"></script>
 </body>
@@ -145,7 +145,7 @@ tags_tpl = """<!DOCTYPE html>
     {% endfor %}
 </div>
 <footer>
-    <a href="/about.html" target="_blank" class="muted">关于</a>
+    <a href="/about.html" target="_blank" class="muted"><i>关于</i></a>
 </footer>
 <script src="/static/min.js"></script>
 </body>
