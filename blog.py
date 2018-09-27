@@ -207,7 +207,7 @@ class Blog(object):
 
     def write_notes(self, notes):
         html = self.index_tpl.render(seq=notes)
-        f = open("notehtml", "w")
+        f = open("notes.html", "w")
         f.write(html)
         f.close()
 
