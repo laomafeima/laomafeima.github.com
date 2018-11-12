@@ -19,7 +19,10 @@ a {
     transition: color 0.3s;
 }
 
-
+h1, h2, h3, h4, h5, h6 {
+    color: #42b983;
+}
+ 
 header {
 	text-align:center;
 	color:#ddd;
