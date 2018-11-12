@@ -19,7 +19,7 @@ a {
     transition: color 0.3s;
 }
 
-h1, h2, h3, h4, h5, h6 {
+.markdown-body h1, .markdown-body h2, .markdown-body h3, .markdown-body h4, .markdown-body h5, .markdown-body h6 {
     color: #42b983;
 }
  
