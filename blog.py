@@ -2,7 +2,6 @@
 # coding: utf-8
 
 
-import jinja2
 import os
 from configparser import ConfigParser
 from hashlib import md5
@@ -43,6 +42,8 @@ doc_item_tpl = """<!DOCTYPE html>
     <time datetime="{{ date }}">{{ date }}</time>
 </div>
 <footer>
+    <a href="/notes.html" target="_blank" class="muted"><i>笔记</i></a>
+    <i>/</i>
     <a href="/tags.html" target="_blank" class="muted"><i>标签</i></a>
     <i>/</i>
     <a href="/about.html" target="_blank" class="muted"><i>关于</i></a>
@@ -80,6 +81,8 @@ index_tpl = """<!DOCTYPE html>
     </ul>
 </div>
 <footer>
+    <a href="/notes.html" target="_blank" class="muted"><i>笔记</i></a>
+    <i>/</i>
     <a href="/tags.html" target="_blank" class="muted"><i>标签</i></a>
     <i>/</i>
     <a href="/about.html" target="_blank" class="muted"><i>关于</i></a>
@@ -111,6 +114,8 @@ tag_tpl = """<!DOCTYPE html>
     </ul>
 </div>
 <footer>
+    <a href="/notes.html" target="_blank" class="muted"><i>笔记</i></a>
+    <i>/</i>
     <a href="/tags.html" target="_blank" class="muted"><i>标签</i></a>
     <i>/</i>
     <a href="/about.html" target="_blank" class="muted"><i>关于</i></a>
@@ -142,6 +147,8 @@ tags_tpl = """<!DOCTYPE html>
     {% endfor %}
 </div>
 <footer>
+    <a href="/notes.html" target="_blank" class="muted"><i>笔记</i></a>
+    <i>/</i>
     <a href="/about.html" target="_blank" class="muted"><i>关于</i></a>
 </footer>
 <script src="/static/min.js"></script>
