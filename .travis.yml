@@ -17,9 +17,9 @@ after_success:
   - git clone https://${GH_REF} .deploy_git
   - cd .deploy_git
   - git checkout master
-  - mv ../annual/* ./annual/
   - mv ../tag/* ./tag/
   - mv ../blog/* ./blog/
+  - mv ../annual/* ./annual/
   - mv ../static/* ./static/
   - mv ../img/* ./img/
   - mv ../*.html ./

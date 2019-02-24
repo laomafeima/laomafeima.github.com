@@ -13,14 +13,7 @@ from pypinyin import pinyin as too_pinyin, Style as PinyinStyle
 from jinja2 import Template
 
 
-config = """
-[base]
-markdown = ./markdown/
-blog_url = /blog/%%s.html
-tag_url = /tag/%%s.html
-"""
-
-blog_item_tpl = """<!DOCTYPE html>
+doc_item_tpl = """<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
@@ -71,9 +64,13 @@ index_tpl = """<!DOCTYPE html>
 </head>
 <body>
 <header>
+    {% if blog_name %}
+    <h2 class="logo-text">{{ blog_name }}</h2>
+    {% else %}
     <a href="/" class="logo-link">
         <img alt="img" src="/static/favicon.png">
     </a>
+    {% endif %}
 </header>
 <div class="content">
     <ul class="posts">
@@ -108,7 +105,7 @@ tag_tpl = """<!DOCTYPE html>
 </header>
 <div class="content">
     <ul class="posts">
-        {% for item in tag_group.blogs %}
+        {% for item in tag_group.docs %}
         <li><div class="post-name"><small class="datetime muted">{{ item.date }}</small><a href="{{ item.url }}">{{ item.title }}</a></div></li>
         {% endfor %}
     </ul>
@@ -155,82 +152,70 @@ tags_tpl = """<!DOCTYPE html>
 
 class Blog(object):
 
+    def get_dict(self):
+        return self.__dict__
 
-    def __init__(self):
-        self.config = None
-        self.blog_item_tpl = None
+    def __init__(self, config, blog_name=None):
+        self.blog_name = blog_name
+        self.config = config
+        self.doc_item_tpl = None
         self.index_tpl = None
         self.tag_tpl = None
         self.tags_tpl = None
-        self.blogs = []
-        self.notes = []
+        self.docs = []
+        self.tags = {}
 
-    def config_parser(self):
-        cfg = ConfigParser()
-        cfg.read_string(config)
-        self.config = cfg
-    
     def tpl_parser(self):
-        self.blog_item_tpl = Template(blog_item_tpl)
+        self.doc_item_tpl = Template(doc_item_tpl)
         self.index_tpl = Template(index_tpl)
         self.tag_tpl = Template(tag_tpl)
         self.tags_tpl = Template(tags_tpl)
 
 
-    def get_markdown(self):
-        markdown = Markdown(extensions=['tables', 'meta', 'fenced_code'])
-        return markdown
-
     def start(self):
-        self.config_parser()
         self.tpl_parser()
         self.loop_item()
-        self.index_parser()
-        self.write_notes()
+        self.sort()
+        self.write_doc()
+        if self.config.has_option("base", "index_path"):
+            self.write_index()
+        if self.config.has_option("base", "tags_path"):
+            self.write_tags()
 
-
-    def index_parser(self):
-        blogs = sorted(self.blogs, key=lambda d: d['date'], reverse=True)
-        tags = {}
-        for i in blogs:
-            for tag in i['tags']:
-                if tag['tag'] in tags.keys():
-                    tags[tag['tag']]["blogs"].append(i)
+    def sort(self):
+        docs = sorted(self.docs, key=lambda d: d.date, reverse=True)
+        for i in docs:
+            for tag in i.tags:
+                if tag['tag'] in self.tags.keys():
+                    self.tags[tag['tag']]["docs"].append(i)
                 else:
-                    tags[tag['tag']] = {
+                    self.tags[tag['tag']] = {
                             "tag": tag['tag'],
                             "url":tag['url'],
-                            "blogs": [i],
+                            "docs": [i],
                             }
-        self.write_index(blogs)
-        self.write_tag(tags)
     
-    def write_index(self, blogs):
-        html = self.index_tpl.render(seq=blogs)
-        f = open("index.html", "w")
+    def write_doc(self):
+        for i in self.docs:
+            i.write()
+
+    def write_index(self):
+        html = self.index_tpl.render(blog_name=self.blog_name, seq=self.docs)
+        index = self.config.get("base", "index_path")
+        f = open(index, "w")
         f.write(html)
         f.close()
 
-
-    def write_notes(self):
-        notes = sorted(self.notes, key=lambda d: d['date'], reverse=True)
-        html = self.index_tpl.render(seq=notes)
-        f = open("notes.html", "w")
-        f.write(html)
-        f.close()
-
-
-
-
-    def write_tag(self, tags):
-        for tag_group in tags.values():
+    def write_tags(self):
+        tags_path = self.config.get("base", "tags_path")
+        for tag_group in self.tags.values():
             html = self.tag_tpl.render(tag_group=tag_group)
             f = open(self.get_tag_path(tag_group), "w")
             f.write(html)
             f.close()
 
-        html = self.tags_tpl.render(tags=tags.values())
-        f = open("./tags.html", "w")
+        html = self.tags_tpl.render(tags=self.tags.values())
+        f = open(tags_path, "w")
         f.write(html)
         f.close()
 
@@ -249,78 +234,90 @@ class Blog(object):
 
 
     def item_parser(self, file_path):
-        md_file = open(file_path,'rb')
+        out_path_tpl = self.config.get("base", "html_path")
+        doc_url = self.config.get("base", "doc_url")
+        tag_url = self.config.get("base", "tag_url")
+        doc = Document(file_path, out_path_tpl, doc_url, tag_url,
+                self.doc_item_tpl)
+        doc.parser()
+        self.docs.append(doc)
+
+class Utils(object):
+
+    def get_pinyin(word):
+        pinyin = too_pinyin(word, style=PinyinStyle.NORMAL)
+        return [str(i.pop()).strip() for i in pinyin]
+
+    def get_markdown():
+        markdown = Markdown(extensions=['tables', 'meta', 'fenced_code'])
+        return markdown
+
+
+class Document(dict):
+
+    def get_dict(self, name):
+        return self.__dict__
+
+    def __init__(self, in_path, out_path_tpl, doc_url, tag_url, html_tpl):
+        self.in_path = in_path
+        self.out_path_tpl = out_path_tpl
+        self.doc_url = doc_url
+        self.tag_url = tag_url
+        self.html_tpl = html_tpl
+        self.has_update = False
+        self.hash = ""
+        self.html = ""
+        self.title = ""
+        self.tags = []
+        self.date = ""
+        self.url = ""
+
+    def parser(self):
+        md_file = open(self.in_path,'rb')
         content = md_file.read()
         text = content.decode("utf-8")
-        item = self.markdown_parser(text)
         md_file.close()
-        if item is None:
-                return None
-        item['hash'] = md5(content).hexdigest()
-        self.write_blog(item)
-        del(item['content'])
-        if(item['type'] == "blog"):
-            self.blogs.append(item)
-        else:
-            self.notes.append(item)
-
-    def write_blog(self, item):
-        html = self.blog_item_tpl.render(**item)
-        html_path = self.get_blog_path(item)
-        if not os.path.exists(html_path) or\
-                self.get_html_hash(html_path) != item['hash']:
-            f = open(html_path, "w")
-            f.write(html)
-            f.close()
+        self.markdown_parser(text)
+        self.hash = md5(content).hexdigest()
+        if self.hash != self.get_html_hash(self.out_path):
+            self.has_update = True
 
 
     def get_html_hash(self, html_path):
+        if not os.path.exists(html_path):
+            return ""
         f = open(html_path, "r")
         html = MyHTMLParser()
         html.feed(f.read())
         if "hash" in html.data.keys():
             return html.data['hash']
+        return ""
 
-
-    def get_blog_path(self, item):
-        url = item['url']
-        return ".%s"%url
+    def write(self):
+        if self.has_update:
+            f = open(self.out_path, "w")
+            f.write(self.html)
+            f.close()
 
     def markdown_parser(self, text):
-        md = self.get_markdown()
-        html = md.convert(text)
-        if not all([(i in md.Meta.keys()) for i in ["title", "date", "type"]]):
+        md = Utils.get_markdown()
+        self.content = md.convert(text)
+        if not all([(i in md.Meta.keys()) for i in ["title", "date"]]):
             return None
         result = {}
-        result['title'] = ",".join(md.Meta['title'])
-        result['date'] = ",".join(md.Meta['date'])
-        result['type'] = ",".join(md.Meta['type'])
-        result['tags'] = self.get_md_tags(md.Meta['tags']) if "tags" in md.Meta.keys() else []
-        result['url'] = self.get_url(result['title'], md.Meta)
-        result['content'] = html
-        return result
+        self.title = ",".join(md.Meta['title'])
+        self.date = ",".join(md.Meta['date'])
+        self.tags = self.get_md_tags(md.Meta['tags']) if "tags" in md.Meta.keys() else []
+        self.html = self.html_tpl.render(self.__dict__)
+
+        pinyin = Utils.get_pinyin(self.title)
+        file_name = "-".join(pinyin)
+        self.url = self.doc_url % file_name
+        self.out_path = self.out_path_tpl % file_name
 
     def get_md_tags(self, tags):
         tags = "".join(tags).split(",")
-        url = self.config.get("base", "tag_url")
-        return [{"tag": i.strip(), "url": url%i.strip()} for i in tags]
-
-
-    def get_url(self, title, meta):
-        if "url" in meta.keys():
-            url = ",".join(meta['url'])
-        else:
-            pinyin = self.get_pinyin(title)
-            url = "-".join(pinyin)
-            url = self.config.get("base", "blog_url") % url
-        return url
-
-
-
-    def get_pinyin(self, word):
-        pinyin = too_pinyin(word, style=PinyinStyle.NORMAL)
-        return [str(i.pop()).strip() for i in pinyin]
-
+        return [{"tag": i.strip(), "url": self.tag_url % i.strip()} for i in tags]
 
 
 class MyHTMLParser(HTMLParser):
@@ -342,7 +339,50 @@ class MyHTMLParser(HTMLParser):
         pass
 
 def main():
-    Blog().start()
+    annual_config = """
+[base]
+markdown = ./markdown/annual/
+html_path = ./annual/%%s.html
+tag_path = ./tag/%%s.html
+index_path = ./annual/index.html
+doc_url = /annual/%%s.html
+tag_url = /tag/%%s.html
+"""
+    Blog(config_parser(annual_config), "年度目标").start()
+
+    note_config = """
+[base]
+markdown = ./markdown/note/
+html_path = ./blog/%%s.html
+tag_path = ./tag/%%s.html
+index_path = ./notes.html
+tags_path = ./tags.html
+doc_url = /blog/%%s.html
+tag_url = /tag/%%s.html
+"""
+    note = Blog(config_parser(note_config))
+    note.start()
+
+
+
+    blog_config = """
+[base]
+markdown = ./markdown/
+html_path = ./blog/%%s.html
+tag_path = ./tag/%%s.html
+index_path = ./index.html
+tags_path = ./tags.html
+doc_url = /blog/%%s.html
+tag_url = /tag/%%s.html
+"""
+    blog = Blog(config_parser(blog_config))
+    blog.tags = note.tags
+    blog.start()
+
+def config_parser(config):
+    cfg = ConfigParser()
+    cfg.read_string(config)
+    return cfg
 
 
 if __name__ == "__main__":

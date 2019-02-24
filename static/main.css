@@ -37,8 +37,13 @@ header a#back_home {
     float: left;
 }
 
-header a.logo-link {
+header .logo-text {
     float:left;
+    color: #9f9f9f;
+}
+
+header a.logo-link {
+    float: left;
 }
 header a.logo-link img {
     float: left;
@@ -110,7 +115,8 @@ ul.posts .datetime {
 }
 
 h2.tag-big {
-    float:left;
+    float: left;
+    color: #9f9f9f;
 }
 
 a.tag {
