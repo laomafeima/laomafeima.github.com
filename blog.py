@@ -348,7 +348,8 @@ index_path = ./annual/index.html
 doc_url = /annual/%%s.html
 tag_url = /tag/%%s.html
 """
-    Blog(config_parser(annual_config), "年度目标").start()
+    annual = Blog(config_parser(annual_config), "年度目标")
+    annual.start()
 
     note_config = """
 [base]
@@ -360,7 +361,7 @@ tags_path = ./tags.html
 doc_url = /blog/%%s.html
 tag_url = /tag/%%s.html
 """
-    note = Blog(config_parser(note_config))
+    note = Blog(config_parser(note_config), "笔记")
     note.start()
 
 
