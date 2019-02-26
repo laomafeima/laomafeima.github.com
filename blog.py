@@ -191,7 +191,7 @@ class Blog(object):
 
     def sort(self):
         self.docs = sorted(self.docs, key=lambda d: d.date, reverse=True)
-        for i in docs:
+        for i in self.docs:
             for tag in i.tags:
                 if tag['tag'] in self.tags.keys():
                     self.tags[tag['tag']]["docs"].append(i)
