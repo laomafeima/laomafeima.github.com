@@ -190,7 +190,7 @@ class Blog(object):
             self.write_tags()
 
     def sort(self):
-        docs = sorted(self.docs, key=lambda d: d.date, reverse=True)
+        self.docs = sorted(self.docs, key=lambda d: d.date, reverse=True)
         for i in docs:
             for tag in i.tags:
                 if tag['tag'] in self.tags.keys():
