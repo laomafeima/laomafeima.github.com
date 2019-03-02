@@ -246,8 +246,8 @@ class Blog(object):
         tag_url = self.config.get("base", "tag_url")
         doc = Document(file_path, out_path_tpl, doc_url, tag_url,
                 self.doc_item_tpl)
-        doc.parser()
-        self.docs.append(doc)
+        if doc.parser():
+            self.docs.append(doc)
 
 class Utils(object):
 
@@ -256,7 +256,8 @@ class Utils(object):
         return [str(i.pop()).strip() for i in pinyin]
 
     def get_markdown():
-        markdown = Markdown(extensions=['tables', 'meta', 'fenced_code'])
+        markdown = Markdown(extensions=['tables', 'meta', 'fenced_code',
+            'nl2br', 'sane_lists'])
         return markdown
 
 
@@ -272,6 +273,7 @@ class Document(dict):
         self.tag_url = tag_url
         self.html_tpl = html_tpl
         self.has_update = False
+        self.out_path = ""
         self.hash = ""
         self.html = ""
         self.title = ""
@@ -284,11 +286,12 @@ class Document(dict):
         content = md_file.read()
         text = content.decode("utf-8")
         md_file.close()
-        self.markdown_parser(text)
+        if self.markdown_parser(text) is False:
+            return False
         self.hash = md5(content).hexdigest()
         if self.hash != self.get_html_hash(self.out_path):
             self.has_update = True
-
+        return True
 
     def get_html_hash(self, html_path):
         if not os.path.exists(html_path):
@@ -310,7 +313,7 @@ class Document(dict):
         md = Utils.get_markdown()
         self.content = md.convert(text)
         if not all([(i in md.Meta.keys()) for i in ["title", "date"]]):
-            return None
+            return False
         result = {}
         self.title = ",".join(md.Meta['title'])
         self.date = ",".join(md.Meta['date'])
@@ -321,6 +324,7 @@ class Document(dict):
         file_name = "-".join(pinyin)
         self.url = self.doc_url % file_name
         self.out_path = self.out_path_tpl % file_name
+        return True
 
     def get_md_tags(self, tags):
         tags = "".join(tags).split(",")

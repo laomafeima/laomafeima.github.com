@@ -54,6 +54,7 @@ p, blockquote, ul, ol, dl, li, table, pre {
 p{
     margin:1em 0;
     color: #5a5a5a;
+    text-indent: 2em;
 }
  
 pre { 
@@ -98,7 +99,7 @@ a:hover{
 blockquote{
     color:#666666;
     margin:0;
-    padding-left: 3em;
+    padding-left: 2em;
     border-left: 0.5em #EEE solid;
 }
  
