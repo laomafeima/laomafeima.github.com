@@ -107,4 +107,4 @@ $gdb hello 11127
 #### 注解
 > 交互模式下直接回车的作用是重复上一指令，对于单步调试非常方便。
 
-**内容复制自[gdb 调试利器](https://linuxtools-rst.readthedocs.io/zh_CN/latest/tool/gdb.html)**
+*内容复制自[gdb 调试利器](https://linuxtools-rst.readthedocs.io/zh_CN/latest/tool/gdb.html)*

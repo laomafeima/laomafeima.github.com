@@ -54,7 +54,6 @@ p, blockquote, ul, ol, dl, li, table, pre {
 p{
     margin:1em 0;
     color: #5a5a5a;
-    text-indent: 2em;
 }
  
 pre { 
