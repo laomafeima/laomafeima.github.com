@@ -48,7 +48,7 @@ hr {
     background-color: #CCCCCC;
 }
 p, blockquote, ul, ol, dl, li, table, pre {
-    margin: 15px 0;
+    margin: 10px 0;
 }
  
 p{
@@ -76,7 +76,7 @@ code {
     background-color:#F8F8F8;
     border: 1px solid #CCCCCC;
     border-radius: 3px;
-    padding: 0 0.2em;
+    padding: 0.12em 0.2em;
     line-height: 1;
 }
  
