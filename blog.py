@@ -28,9 +28,7 @@ doc_item_tpl = """<!DOCTYPE html>
 </head>
 <body>
 <header>
-    <a href="/" class="logo-link">
-        <img alt="img" src="/static/favicon.png">
-    </a>
+    <div id="go-back" onclick="javascript:history.back(-1);">↼</div>
 </header>
 <div class="markdown-body">
     {{ content}}
@@ -65,13 +63,7 @@ index_tpl = """<!DOCTYPE html>
 </head>
 <body>
 <header>
-    {% if blog_name %}
     <h2 class="logo-text">{{ blog_name }}</h2>
-    {% else %}
-    <a href="/" class="logo-link">
-        <img alt="img" src="/static/favicon.png">
-    </a>
-    {% endif %}
 </header>
 <div class="content">
     <ul class="posts">
@@ -133,13 +125,10 @@ tags_tpl = """<!DOCTYPE html>
     <title>标签</title>
     <link rel="icon" type="image/png" href="/static/favicon.png">
     <link rel="stylesheet" href="/static/main.css">
-    <link rel="stylesheet" href="/static/markdown.css">
 </head>
 <body>
 <header>
-    <a href="/" class="logo-link">
-        <img alt="img" src="/static/favicon.png">
-    </a>
+    <h2 class="logo-text">标签</h2>
 </header>
 <div class="bottom">
     {% for tag in tags %}
@@ -387,7 +376,7 @@ tags_path = ./tags.html
 doc_url = /blog/%%s.html
 tag_url = /tag/%%s.html
 """
-    blog = Blog(config_parser(blog_config))
+    blog = Blog(config_parser(blog_config), "老馬")
     blog.tags = note.tags
     blog.start()
 

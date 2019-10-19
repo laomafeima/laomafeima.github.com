@@ -26,7 +26,7 @@ document.onscroll = function()
         {
             aEle = document.createElement("a");
             aEle.id = "back-top";
-            aEle.href = "#go-back-home";
+            aEle.href = "#go-back-top";
             aEle.title = "返回顶部";
             aEle.innerText = "^";
             aEle.onclick = back_top;

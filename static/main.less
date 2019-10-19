@@ -1,0 +1,275 @@
+@import "color.less";
+
+body {
+    -webkit-font-smoothing: antialiased;
+    font-family: 'Helvetica Neue', 'Microsoft Jhenghei', 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;
+    max-width:720px;
+    margin:auto;
+    padding-left: 10px;
+    background-color: @body-background-color;
+    color: @text-color;
+}
+
+a {
+    text-decoration: none;
+    color: @a-color;
+    display: inline-block;
+    vertical-align: baseline;
+    zoom: 1;
+    -webkit-transition: color 0.3s;
+    -moz-transition: color 0.3s;
+    -ms-transition: color 0.3s;
+    -o-transition: color 0.3s;
+    transition: color 0.3s;
+}
+
+header {
+    text-align:center;
+    margin-top:40px;
+}
+body .markdown-body {
+    display:block;
+    clear:both;
+}
+
+header a#back-top {
+    float: left;
+}
+
+header #go-back {
+    float: left;
+    font-size: 2.5em;
+    color:@a-color;
+    font-weight: bold;
+    margin-bottom: -1em;
+    margin-left: -1.3em;
+    cursor: pointer;
+}
+
+header #go-back:hover {
+    color: @a-hover-color;
+}
+
+header .logo-text {
+    float:left;
+    color: @header-color;
+}
+
+time {
+    float:right;
+    color: @time-color;
+    font-weight: bold;
+}
+
+.content {
+    position: relative;
+    width: 100%;
+    float:left;
+    margin: auto;
+}
+
+ul.posts, ul.posts li {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+ul.posts li {
+    margin-bottom: 20px;
+}
+
+ul.posts, ul.posts li {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.content .post-name{
+    font-weight: 300;
+    font-size:1em;
+    line-height:2;
+}
+
+.content h1, .content h2, .content h3, .content h4, .content h5, .content h6 {
+    margin-bottom: 0.4em;
+    line-height: 1.5;
+}
+
+ul.posts .datetime {
+    display: inline-block;
+    vertical-align: baseline;
+    zoom: 1;
+    width: 150px;
+    text-transform: uppercase;
+    float: right;
+    color: @time-color;
+    font-size: 0.9em;
+    font-weight:bold;
+    text-align: right;
+}
+
+.content a {
+    font-weight: bold;
+}
+
+.content a:hover {
+
+    color: @a-hover-color;
+    background: repeat-x left bottom;
+}
+
+h2.tag-big {
+    float: left;
+    color: @header-color;
+}
+
+a.tag {
+    text-decoration: none;
+    font-weight: bold;
+    color: @tag-color;
+    padding-right: 6px;
+}
+
+a.tag:hover {
+    color: @tag-hover-color;
+    cursor: pointer;
+}
+
+.muted {
+    color: @muted-color;
+    text-decoration: none;
+    display: inline-block;
+    vertical-align: baseline;
+    zoom: 1;
+    -webkit-transition: color 0.3s;
+    -moz-transition: color 0.3s;
+    -ms-transition: color 0.3s;
+    -o-transition: color 0.3s;
+    transition: color 0.3s;
+}
+
+.bottom {
+    clear:both;
+}
+
+footer {
+    width: 100%;
+    color: @footer-color;
+    float:left;
+    margin:25px 0 15px;
+    text-align: right;
+    font-size: 0.8em;
+}
+
+footer#about {
+    text-align: left;
+}
+
+footer a {
+    margin: 0 3px 0 3px;
+}
+
+footer a:hover {
+    color: @a-color;
+}
+
+#back-top{
+    position: fixed;
+    right: 10px;
+    bottom: 0;
+    font-size: 4em;
+    color: @footer-color;
+    margin-bottom:30px;
+    margin-right:10px;
+}
+#back-top:hover{
+    color: @a-hover-color;
+    text-decoration: blink;
+}
+
+@media (max-width: 820px){
+    header #go-back {
+        margin-bottom: 0;
+        margin-left: 0;
+    }
+}
+
+@media (max-width: 480px){
+    body .content ul.posts .datetime {
+        float: none;
+        display: none;
+        width: auto;
+        text-align: left;
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: @dark-body-background-color;
+        color: @dark-text-color;
+        font-weight: bold;
+    }
+
+    a {
+        color: @dark-a-color;
+    }
+
+    img { 
+        filter: grayscale(30%) brightness(0.5);
+    }
+
+    header #go-back {
+        color:@dark-a-color;
+    }
+
+    header #go-back:hover {
+        color: @dark-a-hover-color;
+    }
+
+    header .logo-text {
+        color: @dark-header-color;
+    }
+
+    time {
+        color: @dark-time-color;
+    }
+
+    ul.posts .datetime {
+        color: @dark-time-color;
+    }
+
+    .content a:hover {
+        color: @dark-a-hover-color;
+    }
+
+    h2.tag-big {
+        color: @dark-header-color;
+    }
+
+    a.tag {
+        color: @dark-tag-color;
+    }
+
+    a.tag:hover {
+        color: @dark-tag-hover-color;
+    }
+
+    .muted {
+        color: @dark-muted-color;
+    }
+
+    footer {
+        color: @dark-footer-color;
+    }
+
+    footer a:hover {
+        color: @dark-a-color;
+    }
+
+    #back-top{
+        color: @dark-footer-color;
+    }
+    #back-top:hover{
+        color: @dark-a-hover-color;
+    }
+}

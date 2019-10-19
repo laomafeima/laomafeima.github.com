@@ -1,0 +1,41 @@
+// light color
+@body-background-color: #FFFFFF;
+@header-color: #888888;
+@heading-color: #42B983;
+@text-color: darken(@body-background-color, 65%);
+@a-color: @heading-color;
+@a-hover-color: darken(@a-color, 20%);
+@time-color: #AAAAAA;
+@code-color: #111111;
+@border-color: darken(@body-background-color, 20%);
+@pre-code-background-color: darken(@body-background-color, 5%);
+@blockquote-border-color: darken(@body-background-color, 5%);
+@table-border-color: darken(@body-background-color, 20%);
+@table-thead-color: difference(#FFFFFF, @body-background-color);
+@table-thead-background-color: darken(@body-background-color, 10%);
+@table-tr-nth-background-color: darken(@body-background-color, 5%);
+@tag-color: #AAAAAA;
+@tag-hover-color: darken(@tag-color, 20%);
+@muted-color: #AAAAAA;
+@footer-color: #AAAAAA;
+
+// dark color
+@dark-body-background-color: #444444;
+@dark-header-color: #888888;
+@dark-heading-color: #e39777;
+@dark-text-color: #E4E4E4;
+@dark-a-color: @dark-heading-color;
+@dark-a-hover-color: darken(@dark-a-color, 20%);
+@dark-time-color: darken(@dark-text-color, 40%);
+@dark-code-color: darken(@dark-text-color, 20%);
+@dark-border-color: darken(@dark-body-background-color, 5%);
+@dark-pre-code-background-color: lighten(@dark-body-background-color, 2%);
+@dark-blockquote-border-color: lighten(@dark-body-background-color, 5%);
+@dark-table-border-color: lighten(@dark-body-background-color, 10%);
+@dark-table-thead-color: difference(#FFFFFF, @dark-body-background-color);
+@dark-table-thead-background-color: lighten(@dark-body-background-color, 10%);
+@dark-table-tr-nth-background-color: lighten(@dark-body-background-color, 5%);
+@dark-tag-color: darken(@dark-text-color, 40%);
+@dark-tag-hover-color: @dark-a-hover-color;
+@dark-muted-color: darken(@dark-text-color, 40%);
+@dark-footer-color: darken(@dark-text-color, 40%);
