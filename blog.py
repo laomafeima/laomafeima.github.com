@@ -23,8 +23,7 @@ doc_item_tpl = """<!DOCTYPE html>
     <title>{{ title }}</title>
 
     <link rel="icon" type="image/png" href="/static/favicon.png">
-    <link rel="stylesheet" href="/static/main.css">
-    <link rel="stylesheet" href="/static/markdown.css">
+    <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
 <header>
@@ -59,7 +58,7 @@ index_tpl = """<!DOCTYPE html>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>老馬</title>
     <link rel="icon" type="image/png" href="/static/favicon.png">
-    <link rel="stylesheet" href="/static/main.css">
+    <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
 <header>
@@ -92,7 +91,7 @@ tag_tpl = """<!DOCTYPE html>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ tag_group.tag }}</title>
     <link rel="icon" type="image/png" href="/static/favicon.png">
-    <link rel="stylesheet" href="/static/main.css">
+    <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
 <header>
@@ -124,7 +123,7 @@ tags_tpl = """<!DOCTYPE html>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>标签</title>
     <link rel="icon" type="image/png" href="/static/favicon.png">
-    <link rel="stylesheet" href="/static/main.css">
+    <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
 <header>
