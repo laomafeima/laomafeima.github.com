@@ -1,0 +1,3 @@
+markdown
+pypinyin
+jinja2

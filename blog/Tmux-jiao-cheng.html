@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="markdown-hash" content="">
+
+    <title>Tmux 教程</title>
+
+    <link rel="icon" type="image/png" href="/static/favicon.png">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<header>
+    <div id="go-back" onclick="javascript:history.back(-1);">↼</div>
+</header>
+<div class="markdown-body">
+    <h1>Tmux 教程</h1>
+<h2>Tmux 简介</h2>
+<p>Tmux 是一个终端复用软件，类似 Linux 下的 Screen。但是相比之下 Tmux 窗口功能，能在终端下提供类似窗口的功能操作。<br />
+只要在服务器上运行起 Tmux 服务端之后，无论 ssh 掉线还是其它原因。那么所有的操作和输出都还在。可以再次恢复。很适合多台电脑或者工作厂地切换的时候，都能实现无缝切换，一致的体验。</p>
+<h2>概念模型</h2>
+<table>
+<thead>
+<tr>
+<th align="center">模块</th>
+<th align="left">介绍</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">Server</td>
+<td align="left">服务，服务运行基础服务，维持每一个 seesion</td>
+</tr>
+<tr>
+<td align="center">Session</td>
+<td align="left">会话，一个服务可以有多个会话，每个会话之间相互独立</td>
+</tr>
+<tr>
+<td align="center">Window</td>
+<td align="left">窗口，一个会话里面的可以有多个窗口。一个窗口可以包含多个面板，显示的时候只会显示一个窗口</td>
+</tr>
+<tr>
+<td align="center">Panel</td>
+<td align="left">面板，每个窗口可以包含并显示多个面板，每个面板都可以独立的运行命令或程序，可以在面板之间自由切换</td>
+</tr>
+</tbody>
+</table>
+<p>运行 tmux 命令后就会自动创建一个服务，会话，窗口，面板。一个服务可以维持多个会话，当最后一个会话被关闭的时候服务也会关闭。</p>
+<h2>基本操作</h2>
+<h3>牛刀小试</h3>
+<p>运行 <code>tmux</code> 命令，会自动创建一个临时会话，可以看到似乎和普通的终端没什么区别，只是在最下面多了一行类似 Vim 的状态栏。后面我们会介绍如何配置状态栏。<br />
+在里面输入几条命令和往常一样没有什么区别。输入 <code>exit</code> 可以退出 Tmux 而不是退出终端。</p>
+<h3>快捷键前缀（Prefix）</h3>
+<p>为了避免 Tmux 自身的快捷键与其它软件冲突，所以在使用 Tmux 快捷键的时候需要先按前缀键然后在操作，这样可以很好的避免快捷冲突，尤其是在和 Vim 搭配的时候。<br />
+Tmux 默认的前缀键为 <code>Control+b</code> 即同时按下 <code>Control</code> 键和 <code>b</code> 键。如果觉得这两个按键操作不方便可以在用户目录下创建一个 <code>.tmux.conf</code> 文件。在里面添加上</p>
+<pre><code>unbind C-b
+set -g prefix C-a
+</code></pre>
+<p>这样前缀键就修改为了 <code>Control+a</code>。<br />
+为了方面叙述，后面会用<code>{前缀键}</code>代表这一操作。</p>
+<h3>会话</h3>
+<p>一个服务可以有多个会话，每个会话可以有不同的操作，可以在不同的会话之间来回切换，以适应不同的场景。<br />
+输入：</p>
+<pre><code>tmux new -s work
+</code></pre>
+<p>可以创建一个名字为 <code>work</code> 的会话，指定会话名字可以让我们后续的操作更为方便。</p>
+<pre><code>exit
+</code></pre>
+<p>在窗口中输入 <code>exit</code>可以退出会话。也可以输入命令：</p>
+<pre><code>tmux kill-session -t work
+</code></pre>
+<p>来关闭一个会话</p>
+<p>如果不想退出会话，但是又想切换到普通终端的时候可以按<code>{前缀键}＋d</code> 即可切换到普通而不退出会话。或者输入命令：</p>
+<pre><code>tmux detach -s work
+</code></pre>
+<p>来实现同样的效果。</p>
+<p>退出后，如果想回到之前的会话可以输入：</p>
+<pre><code>tmux attach -t work
+</code></pre>
+<p>这样就能回到名为 <code>work</code> 的会话。<br />
+如果想修改会话名字可以输入：</p>
+<pre><code>tmux rename -t work test
+</code></pre>
+<p>这样会话<code>work</code>变为了<code>test</code>，而会话内容不变。<br />
+如果有多个会话可以输入</p>
+<pre><code>tmux ls
+</code></pre>
+<p>查看当前有多少个会话。<br />
+如果在会话里面可以使用<code>{前缀键}＋s</code>查看所有会话，并可以在会话间自由切换。</p>
+<h3>窗口</h3>
+<p>进入一个会话，其实所看到的，所操作的就是一个窗口。一个会话可以有多个窗口，并可以自由切换。<br />
+每个窗口都有自己的编号，默认从 0 开始。也可以给每个窗口定义一个名字。方便了解每个窗口。<br />
+进入会话后，默认只有一个窗口，<code>{前缀键＋c}</code> 会创建一个新窗口。<br />
+<code>{前缀键＋,}</code> 可以重命名一个窗口，比如一个叫 edit 一个叫 console 这样就能明确指导窗口的用处了。<br />
+窗口操作相关的快捷键</p>
+<table>
+<thead>
+<tr>
+<th align="left">快捷键</th>
+<th align="left">功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">{前缀键+c}</td>
+<td align="left">创建一个窗口</td>
+</tr>
+<tr>
+<td align="left">{前缀键+,}</td>
+<td align="left">重命名当前窗口</td>
+</tr>
+<tr>
+<td align="left">{前缀键+n}</td>
+<td align="left">切换到前一个窗口</td>
+</tr>
+<tr>
+<td align="left">{前缀键+p}</td>
+<td align="left">切换到后一个窗口</td>
+</tr>
+<tr>
+<td align="left">{前缀键+l}</td>
+<td align="left">在两个窗口间来回切换</td>
+</tr>
+</tbody>
+</table>
+<h3>批量操作</h3>
+<pre><code>:set synchronize-panes
+</code></pre>
+<p>即可开启或者关闭批量操作。</p>
+<h3>文件流操作</h3>
+<p>复制粘贴定位等。</p>
+<h2>我的配置</h2>
+<h3>配置</h3>
+<pre><code># 绑定快捷键
+unbind C-b
+set -g prefix C-a
+# 调整窗口大小快捷键
+bind H resize-pane -L 5
+bind J resize-pane -D 5
+bind K resize-pane -U 5
+bind L resize-pane -R 5
+# 显示256色
+set -g default-terminal "screen-256color"
+# 设置状态栏颜色
+set -g status-fg white
+set -g status-bg black
+set -g status-left-length 40
+set -g status-left "#[fg=green]#(whoami):#S #[fg=yellow]#I #[fg=cyan]#P"
+set -g status-right "#[fg=cyan]%Y/%m/%d %H:%M"
+set -g status-utf8 on
+# 窗口活动通知
+setw -g monitor-activity on
+set -g visual-activity on
+# 处理鼠标
+set -g mouse-utf8 on
+setw -g mouse on
+# 设置 vim 模式操作缓冲区
+setw -g mode-keys vi
+</code></pre>
+<h3>脚本</h3>
+<pre><code>    session_exists() {
+      tmux has-session -t &quot;$1&quot; 2&gt;/dev/null
+    }
+    if session_exists &quot;python&quot;
+    then
+        tmux attach -t python
+    else
+        tmux new-session -s python -n editor -d
+        tmux split-window -v -p 15 -t python:0.0
+        tmux new-window -n console -t python
+        tmux select-window -t python:0
+        tmux select-pane -t python:0.0
+        #tmux send-keys -t development 'cd ~/devproject' C-m
+        tmux attach -t python
+    fi
+</code></pre>
+</div>
+<div class="bottom">
+    
+    <time datetime="2016-10-13">2016-10-13</time>
+</div>
+<footer>
+    <a href="/notes.html" target="_blank" class="muted"><i>笔记</i></a>
+    <i>/</i>
+    <a href="/tags.html" target="_blank" class="muted"><i>标签</i></a>
+    <i>/</i>
+    <a href="/about.html" target="_blank" class="muted"><i>关于</i></a>
+</footer>
+<script src="/static/min.js"></script>
+</body>
+</html>
