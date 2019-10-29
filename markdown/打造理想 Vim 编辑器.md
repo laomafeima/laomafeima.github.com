@@ -228,17 +228,8 @@ Gitgutter 是一个可以显示每行的 Git 状态的插件。和nerdtree-git-p
 
 下载地址 [Vim-Signify](https://github.com/mhinz/vim-signify)，帮助信息[Signify Documentation](https://github.com/mhinz/vim-signify#installation--documentation)
 
-### Neocomplcache 自动补全插件
-
-自动补全可以提高代码的书写效率，和其他 IDE 一样 Vim 也可以提供一样的功能，设置还能补全目录结构。  
-当然如果有折腾的精力，可以了解下坐着另一个作品 [neocomplete.vim](https://github.com/Shougo/neocomplete.vim)  
-下载地址 [neocomplcache.vim](https://github.com/Shougo/neocomplcache.vim) 
-下载后安装到 `~/.vim/` 目录，并在 vimrc 文件中添加以下配置 
-
-
-    let g:neocomplcache_enable_at_startup = 1 " 默认启动 Neocomplcache 
-    inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"  "支持 Tab 选择补全项
-
+### LSP 客户端
+自动补全，语法检查，代码跳转等功能通过 LSP 客户端也是可以实现的，目前我在用的是 [coc.nvim](https://github.com/neoclide/coc.nvim)。
 
 ## 周边
 
