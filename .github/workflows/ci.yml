@@ -10,7 +10,7 @@ jobs:
 
     runs-on: ubuntu-latest
     strategy:
-      max-parallel: 4
+      max-parallel: 1
       matrix:
         python-version: [3.7]
 
@@ -31,5 +31,4 @@ jobs:
     - name: Deploy
       env:
         GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-        BRANCH: master
-      uses: tcitry/push-to-master@v1.0
+      uses: mikeal/publish-to-github-action@master
